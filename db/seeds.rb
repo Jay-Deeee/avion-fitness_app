@@ -19,26 +19,26 @@ ExerciseType.create!([
   { name: "Shrug", category: :back, unit: :reps },
 
   # Shoulders
-  { name: "Shoulder Press", category: :back, unit: :reps },
-  { name: "Lateral Flies", category: :back, unit: :reps },
-  { name: "Facepulls", category: :back, unit: :reps },
-  { name: "Pike Pushup", category: :back, unit: :reps },
-  { name: "Rear Delt Machine Flies", category: :back, unit: :reps },
+  { name: "Shoulder Press", category: :shoulder, unit: :reps },
+  { name: "Lateral Flies", category: :shoulder, unit: :reps },
+  { name: "Facepulls", category: :shoulder, unit: :reps },
+  { name: "Pike Pushup", category: :shoulder, unit: :reps },
+  { name: "Rear Delt Machine Flies", category: :shoulder, unit: :reps },
 
   # Biceps
-  { name: "Bicep Curl", category: :back, unit: :reps },
-  { name: "Hammer Curl", category: :back, unit: :reps },
-  { name: "Preacher Curl", category: :back, unit: :reps },
+  { name: "Bicep Curl", category: :bicep, unit: :reps },
+  { name: "Hammer Curl", category: :bicep, unit: :reps },
+  { name: "Preacher Curl", category: :bicep, unit: :reps },
   
   # Triceps
-  { name: "Skullcrushers", category: :back, unit: :reps },
-  { name: "Push Downs", category: :back, unit: :reps },
-  { name: "Overhead Triceps Extension", category: :back, unit: :reps },
+  { name: "Skullcrushers", category: :tricep, unit: :reps },
+  { name: "Push Downs", category: :tricep, unit: :reps },
+  { name: "Overhead Triceps Extension", category: :tricep, unit: :reps },
   
   # Forearms
-  { name: "Deadhang", category: :back, unit: :seconds },
-  { name: "Wrist Curl", category: :back, unit: :reps },
-  { name: "Wrist Roller", category: :back, unit: :reps },
+  { name: "Deadhang", category: :forearm, unit: :seconds },
+  { name: "Wrist Curl", category: :forearm, unit: :reps },
+  { name: "Wrist Roller", category: :forearm, unit: :reps },
   
   # Legs
   { name: "Calf Raises", category: :legs, unit: :reps },

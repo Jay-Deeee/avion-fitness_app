@@ -40,13 +40,13 @@ ExerciseType.create!([
   { name: "Wrist Curl", category: :forearm, unit: :reps },
   { name: "Wrist Roller", category: :forearm, unit: :reps },
   
-  # Legs
-  { name: "Calf Raises", category: :legs, unit: :reps },
-  { name: "Hack Squat", category: :legs, unit: :reps },
-  { name: "Leg Curls", category: :legs, unit: :reps },
-  { name: "Leg Extension", category: :legs, unit: :reps },
-  { name: "Leg Press", category: :legs, unit: :reps },
-  { name: "Squat", category: :legs, unit: :reps },
+  # leg
+  { name: "Calf Raises", category: :leg, unit: :reps },
+  { name: "Hack Squat", category: :leg, unit: :reps },
+  { name: "Leg Curls", category: :leg, unit: :reps },
+  { name: "Leg Extension", category: :leg, unit: :reps },
+  { name: "Leg Press", category: :leg, unit: :reps },
+  { name: "Squat", category: :leg, unit: :reps },
 
   # Core
   { name: "Crunches", category: :core, unit: :reps },

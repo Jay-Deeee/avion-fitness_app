@@ -1,4 +1,17 @@
-ActiveRecord::Schema[7.2].define(version: 2025_05_22_032333) do
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[7.2].define(version: 2025_05_22_115432) do
+  # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "exercise_types", force: :cascade do |t|
@@ -19,6 +32,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_22_032333) do
     t.datetime "updated_at", null: false
     t.index ["exercise_type_id"], name: "index_exercises_on_exercise_type_id"
     t.index ["workout_id"], name: "index_exercises_on_workout_id"
+  end
+
+  create_table "macros", force: :cascade do |t|
+    t.integer "calories", null: false
+    t.float "protein", null: false
+    t.float "carbohydrates", null: false
+    t.float "fats", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_macros_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,5 +78,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_22_032333) do
 
   add_foreign_key "exercises", "exercise_types"
   add_foreign_key "exercises", "workouts"
+  add_foreign_key "macros", "users"
   add_foreign_key "workouts", "users"
 end

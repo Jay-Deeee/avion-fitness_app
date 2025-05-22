@@ -28,6 +28,25 @@ class FatSecretApi
     JSON.parse(response.body)
   end
 
+  def get_food(food_id)
+    uri = URI(API_BASE_URL)
+    uri.query = URI.encode_www_form({
+      method: "food.get",
+      format: "json",
+      food_id: food_id
+    })
+  
+    request = Net::HTTP::Get.new(uri)
+    request["Authorization"] = "Bearer #{@access_token}"
+  
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(request) }
+  
+    JSON.parse(response.body)
+  rescue => e
+    Rails.logger.error("FatSecret API error: #{e.message}")
+    {}
+  end
+
   private
 
   def fetch_access_token

@@ -15,9 +15,9 @@ class NutriApi
     end
 
     if response.is_a?(Net::HTTPSuccess)
-      puts response.body
+      JSON.parse(response.body)
     else
-      puts "Error: #{response.code} #{response.body}"
+      { error: response.body, status: response.code }
     end
   end
 end

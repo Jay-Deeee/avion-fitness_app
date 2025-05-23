@@ -1,3 +1,6 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
+import "./timer"
+import "flatpickr"
+import "./flatpickr_setup"
+import "./exercise_type_controller"

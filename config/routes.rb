@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # root "workouts#index"
+  root "workouts#index"
   
   devise_for :users
   get 'calculator', to: 'calculators#show', as: :calculator
@@ -13,5 +13,9 @@ Rails.application.routes.draw do
     resources :exercises, except: [:index, :show]
   end
 
-  resources :exercise_types, except: :show
+  resources :exercise_types, except: :show do
+    collection do
+      get :by_category
+    end
+  end
 end

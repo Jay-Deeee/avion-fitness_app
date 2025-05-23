@@ -1,2 +1,35 @@
-<h1>Exercises#new</h1>
-<p>Find me in app/views/exercises/new.html.erb</p>
+<h2>Add Exercise to <%= @workout.name %></h2>
+
+<%= form_with model: [@workout, @exercise] do |f| %>
+  <div>
+    <div>
+      <%= f.label :category, "Category" %>
+      <%= select_tag :exercise_type_category, options_for_select(ExerciseType.categories.keys.map { |c| [c.titleize, c] }), prompt: "Select Category" %>
+    </div>
+
+    <div>
+      <%= f.label :exercise_type_id, "Exercise Type" %>
+      <%= f.collection_select :exercise_type_id, [], :id, :name, prompt: "Select Exercise Type" %>
+    </div>
+    <br>
+    Or create new:
+    <%= text_field_tag :new_exercise_type_name, nil, placeholder: "New type name" %>
+  </div>
+
+  <div>
+    <%= f.label :sets %>
+    <%= f.number_field :sets, min: 1 %>
+  </div>
+
+  <div>
+    <%= f.label :value, "Reps / Time" %>
+    <%= f.number_field :value, min: 1 %>
+  </div>
+
+  <div>
+    <%= f.label :weight, "Weight (optional)" %>
+    <%= f.number_field :weight, step: 0.1 %>
+  </div>
+
+  <%= f.submit "Save Exercise" %>
+<% end %>

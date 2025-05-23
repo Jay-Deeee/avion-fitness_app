@@ -11,3 +11,13 @@
  * It is generally better to create a new file per style scope.
  *
  */
+
+body {
+  height: 100vh;
+  background: #a4c9d7;
+  background: linear-gradient(
+    160deg,
+    rgba(164, 201, 215, 1) 23%,
+    rgba(234, 242, 244, 1) 65%
+  );
+}

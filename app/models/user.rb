@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,:confirmable
 
   has_many :workouts
+  has_many :calculators, dependent: :destroy
 end

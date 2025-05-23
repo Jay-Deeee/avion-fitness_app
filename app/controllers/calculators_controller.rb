@@ -1,0 +1,61 @@
+class CalculatorsController < ApplicationController
+  before_action :authenticate_user! 
+
+  def show
+    if params[:id]
+      @calculator = Calculator.find_by(id: params[:id])
+    else
+      @calculator = Calculator.new
+    end
+  end
+
+  def calculate
+    @calculator = current_user.calculators.build(calculator_params)
+
+    height = @calculator.height
+    waist = @calculator.waist_line
+    neck = @calculator.neck_line
+    hip = @calculator.hip || 0
+
+    height_in_cm = height.to_f
+    waist = waist.to_f
+    neck = neck.to_f
+    hip = hip.to_f
+
+    if height_in_cm <= 0 || waist <= 0 || neck <= 0
+      flash.now[:alert] = "Please enter valid height, waist, and neck measurements."
+      render :show and return
+    end
+
+  # BMI
+  height_in_m = height_in_cm / 100.0
+  @calculator.bmi = (@calculator.weight / (height_in_m ** 2)).round(2)
+
+  # Body Fat
+  if current_user.gender == "Female"
+    if hip <= 0
+      flash.now[:alert] = "Please enter valid hip measurement for females."
+      render :show and return
+    end
+      body_fat = 495.0 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height_in_cm)) - 450.0
+  else
+      body_fat = 495.0 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height_in_cm)) - 450.0
+  end
+
+  @calculator.body_fat = body_fat.round(2)
+
+  if @calculator.save
+    flash.now[:notice] = "Calculations saved!"
+    redirect_to calculator_path(id: @calculator.id)
+  else
+    flash.now[:alert] = "Failed to save calculations."
+    render :show
+  end
+end
+
+private
+
+  def calculator_params
+    params.require(:calculator).permit(:weight, :height, :waist_line, :neck_line, :hip, :date)
+  end
+end

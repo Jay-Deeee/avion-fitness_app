@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # root "workouts#index"
   
   devise_for :users
+  get 'calculator', to: 'calculators#show', as: :calculator
+  post 'calculator/calculate', to: 'calculators#calculate', as: :calculator_calculate  
 
   resources :workouts do
     resources :exercises, except: [:index, :show]

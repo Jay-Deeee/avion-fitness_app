@@ -4,9 +4,8 @@ class WorkoutsController < ApplicationController
   
   def index
     if params[:performed_on].present?
-      selected_date = Date.parse(params[:performed_on])
-      @selected_date = selected_date
-      @workout = current_user.workouts.find_by(performed_on: selected_date)
+      @selected_date = Date.parse(params[:performed_on])
+      @workout = current_user.workouts.find_by(performed_on: @selected_date)
     else
       @workouts = current_user.workouts.order(performed_on: :desc)
     end

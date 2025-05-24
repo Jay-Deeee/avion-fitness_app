@@ -19,4 +19,11 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
+
+  resources :macros, only: [:index, :create, :new] do
+    collection do
+      get :search
+      post :log
+    end
+  end
 end

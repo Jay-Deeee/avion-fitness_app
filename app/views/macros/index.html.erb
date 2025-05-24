@@ -1,0 +1,63 @@
+<section id="macro-container">
+  <div id="macro-calendar">
+    <div>
+      <label for="macro-date">Select a date:</label>
+      <input
+        type="text"
+        id="macro-date"
+        placeholder="Pick a date"
+        data-selected-date="<%= params[:date] %>"
+        data-url-param="date"
+        style="display: none;"
+      />
+    </div>
+  </div>
+
+  <div id="macro-section" style="margin-top: 2rem;">
+    <% if params[:date].present? %>
+      <h3><%= Date.parse(params[:date]).strftime("%B %d, %Y") %></h3>
+
+      <% if @target_macro %>
+        <h4>Target Macros</h4>
+        <ul>
+          <li>Calories: <%= @target_macro.calories %> kcal</li>
+          <li>Protein: <%= @target_macro.protein %>g</li>
+          <li>Carbs: <%= @target_macro.carbohydrates %>g</li>
+          <li>Fats: <%= @target_macro.fats %>g</li>
+        </ul>
+      <% else %>
+        <p>No target set yet. <%= link_to "Set Target", new_macro_path %></p>
+      <% end %>
+
+      <h4>Logged Meals</h4>
+      <% if @macros.any? %>
+        <ul>
+          <% @macros.each do |macro| %>
+            <li>
+              <strong><%= macro.name %></strong> -
+              <%= macro.calories %> kcal,
+              P: <%= macro.protein %>g,
+              C: <%= macro.carbohydrates %>g,
+              F: <%= macro.fats %>g
+              (<%= macro.meal&.capitalize %>)
+            </li>
+          <% end %>
+        </ul>
+
+        <h5>Total for this day:</h5>
+        <ul>
+          <li>Calories: <%= @totals[:calories] %></li>
+          <li>Protein: <%= @totals[:protein] %>g</li>
+          <li>Carbs: <%= @totals[:carbohydrates] %>g</li>
+          <li>Fats: <%= @totals[:fats] %>g</li>
+        </ul>
+      <% else %>
+        <p><em>No meals logged for this day.</em></p>
+      <% end %>
+
+      <%= link_to "Search & Log Food", search_macros_path, class: "btn btn-primary" %>
+    <% else %>
+      <h4><em>No date selected.</em></h4>
+    <% end %>
+  </div>
+</section>

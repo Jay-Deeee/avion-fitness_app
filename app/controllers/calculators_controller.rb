@@ -1,5 +1,5 @@
 class CalculatorsController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!
 
   def show
     if params[:id]
@@ -23,7 +23,7 @@ class CalculatorsController < ApplicationController
     hip = hip.to_f
 
     if height_in_cm <= 0 || waist <= 0 || neck <= 0
-      flash.now[:alert] = "Please enter valid height, waist, and neck measurements."
+      @calculator.errors.add(:base, "Please enter valid measurements.")
       render :show and return
     end
 
@@ -34,7 +34,7 @@ class CalculatorsController < ApplicationController
   # Body Fat
   if current_user.gender == "Female"
     if hip <= 0
-      flash.now[:alert] = "Please enter valid hip measurement for females."
+      @calculator.errors.add(:base, "Please enter valid hip measurement.")
       render :show and return
     end
       body_fat = 495.0 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height_in_cm)) - 450.0
@@ -44,13 +44,7 @@ class CalculatorsController < ApplicationController
 
   @calculator.body_fat = body_fat.round(2)
 
-  if @calculator.save
-    flash.now[:notice] = "Calculations saved!"
-    redirect_to calculator_path(id: @calculator.id)
-  else
-    flash.now[:alert] = "Failed to save calculations."
-    render :show
-  end
+  render :show
 end
 
 private

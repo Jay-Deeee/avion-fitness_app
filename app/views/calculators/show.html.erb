@@ -1,55 +1,62 @@
-<h1>Body Calculator</h1>
+<div class="calculator-container">
+  <h1 class="calculator-title">BMI and Body Fat Calculator</h1>
 
-<p>Gender: <%= current_user.gender %></p>
+  <% if @calculator.errors.any? %>
+    <div class="form-errors alert">
+      <p><%= @calculator.errors.full_messages.first %></p>
+    </div>
+  <% end %>
 
-<%= form_with model: @calculator, url: calculator_calculate_path, local: true do |f| %>
-  <div>
+<%= form_with model: @calculator, url: calculator_calculate_path, local: true, data: { turbo: false } do |f| %>
+  <div class="form-field">
     <%= f.label :date %>
     <%= f.date_field :date %>
   </div>
 
-  <div>
-    <%= f.label :weight, "Weight (kg)" %><br>
+  <div class="form-field">
+    <%= f.label :weight, "Weight (kg)" %>
     <%= f.number_field :weight, step: 0.1 %>
   </div>
 
-  <div>
-    <%= f.label :height, "Height (cm)" %><br>
+  <div class="form-field">
+    <%= f.label :height, "Height (cm)" %>
     <%= f.number_field :height, step: 0.1 %>
   </div>
 
-  <div>
-    <%= f.label :waist_line, "Waist Line (cm)" %><br>
+  <div class="form-field">
+    <%= f.label :waist_line, "Waist Line (cm)" %>
     <%= f.number_field :waist_line, step: 0.1 %>
   </div>
 
-  <div>
-    <%= f.label :neck_line, "Neck Line (cm)" %><br>
+  <div class="form-field">
+    <%= f.label :neck_line, "Neck Line (cm)" %>
     <%= f.number_field :neck_line, step: 0.1 %>
   </div>
   
-  <div>
     <% if current_user.gender == "Female" %>
-    <%= f.label :hip, "Hips (cm)" %><br>
+    <div class="form-field">
+    <%= f.label :hip, "Hips (cm)" %>
     <%= f.number_field :hip %>
+    </div>
   <% end %>
-  </div><br>
 
-  <div>
-    <%= f.submit "Calculate" %>
+  <% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% elsif flash[:alert] %>
+    <p class="alert"><%= flash[:alert] %></p>
+  <% end %>
+
+  <div class="form-submit">
+    <%= f.submit "Calculate", class: "submit-btn" %>
   </div>
 <% end %>
 
 <% if @calculator.bmi %>
+  <div class="result-calculator">
   <p><strong>BMI:</strong> <%= @calculator.bmi %></p>
 <% end %>
 
 <% if @calculator.body_fat %>
   <p><strong>Body Fat Percentage:</strong> <%= @calculator.body_fat %>%</p>
-<% end %>
-
-<% if flash[:notice] %>
-  <p style="color: green"><%= flash[:notice] %></p>
-<% elsif flash[:alert] %>
-  <p style="color: red"><%= flash[:alert] %></p>
+  </div>
 <% end %>

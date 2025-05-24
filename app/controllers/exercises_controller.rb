@@ -1,15 +1,20 @@
 class ExercisesController < ApplicationController
+  before_action :set_workout, only: [:create]
+
   def new
+    @workout = Workout.find(params[:workout_id])
+    @exercise = @workout.exercises.new
+    @exercise_types = ExerciseType.all.order(:name)
   end
 
   def create
-    normalized_name = params[:name].strip.titleize
-    existing = ExerciseType.find_by("LOWER(name) = ?", normalized_name.downcase)
+    @exercise = @workout.exercises.new(exercise_params)
 
-    if existing
-      @exercise_type = existing
+    if @exercise.save
+      redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise saved!"
     else
-      @exercise_type = ExerciseType.create(name: normalized_name, category: params[:category])
+      flash.now[:alert] = "Failed to save task."
+      render "workouts/index", status: :unprocessable_entity
     end
   end
 
@@ -20,5 +25,19 @@ class ExercisesController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def set_workout
+    @workout = Workout.find(params[:workout_id])
+  end
+
+  def set_exercise
+    @exercise = @workout.exercises.find(params[:id])
+  end
+  
+  def exercise_params
+    params.require(:exercise).permit(:exercise_type_id, :sets, :value, :weight)
   end
 end

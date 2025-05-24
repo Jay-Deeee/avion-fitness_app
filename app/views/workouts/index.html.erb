@@ -1,2 +1,56 @@
-<h1>Workouts#index</h1>
-<p>Find me in app/views/workouts/index.html.erb</p>
+<section id="workout-container">
+  <div id="workout-calendar">
+    <div>
+      <label for="workout-date">Select a date:</label>
+      <input
+        type="text"
+        id="workout-date"
+        placeholder="Pick a date"
+        data-selected-date="<%= params[:performed_on] %>"
+        data-url-param="performed_on"
+        style="display: none;"
+        />
+    </div>
+  </div>
+
+  <div id="workout-section" style="margin-top: 2rem;">
+    <% if @selected_date %>
+      <h3><%= @selected_date.strftime("%B %d, %Y") %></h3>
+
+      <% if @workout %>
+        <div>
+          <%= link_to "#{@workout.name}", workout_path(@workout) %>
+
+          <% if @workout.exercises.any? %>
+            <% @workout.exercises.each do |exercise| %>
+              <div>
+                <h5><%= exercise.exercise_type.name %></h5>
+                <ul>
+                  <li>Sets: <%= exercise.sets %></li>
+                  <li>Weight: <%= exercise.weight %> lbs</li>
+                </ul>
+              </div>
+            <% end %>
+          <% else %>
+            <br />
+            <em>Workout log empty</em>
+          <% end %>
+        </div>
+
+        <%= link_to "Add Exercise", new_workout_exercise_path(@workout), class: "btn btn-primary" %>
+      <% else %>
+        <h5><em>No workout on this day.</em></h5>
+        <%= form_with url: workouts_path, method: :post, scope: :workout, local: true do |f| %>
+          <%= f.hidden_field :performed_on, value: @selected_date %>
+          <div>
+            <%= f.label :name, "Workout Name" %>
+            <%= f.text_field :name %>
+          </div>
+          <%= f.submit "Create Workout", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <h4><em>No date selected.</em></h4>
+    <% end %>
+  </div>
+</section>

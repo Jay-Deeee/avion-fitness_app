@@ -1,0 +1,18 @@
+#workout-container {
+  display: flex;
+  justify-content: space-around;
+
+  #workout-calendar {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+
+    // div {
+    //   height: min-content;
+    // }
+  }
+
+  #workout-section {
+    min-width: 50vh;
+  }
+}

@@ -1,2 +1,13 @@
-<h1>Workouts#new</h1>
-<p>Find me in app/views/workouts/new.html.erb</p>
+<%= form_with model: @workout, local: true do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :performed_on %>
+    <%= f.date_field :performed_on %>
+  </div>
+
+  <%= f.submit "Save Workout" %>
+<% end %>

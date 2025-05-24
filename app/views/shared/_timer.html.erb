@@ -1,0 +1,19 @@
+<div id="rest-timer">
+  <h3>Rest Timer</h3>
+
+  <label for="rest-duration">Duration (seconds):</label>
+  <input type="number" id="rest-duration" value="60" min="1" step="1">
+
+  <h2 id="timer-display" style="margin-top: 1rem;">01:00</h2>
+
+  <div style="margin-top: 1rem;">
+    <button id="start-timer" class="btn btn-success">Start</button>
+    <button id="pause-timer" class="btn btn-secondary">Pause</button>
+    <button id="reset-timer" class="btn btn-danger">Reset</button>
+  </div>
+
+  <audio id="timer-beep" style="display: none;">
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+  </audio>
+</div>

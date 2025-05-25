@@ -1,62 +1,105 @@
-<div class="calculator-container">
-  <h1 class="calculator-title">BMI and Body Fat Calculator</h1>
+<div class="calculator">
+  <div class="left">
+    <h1 class="calculator-title">BMI and Body Fat Calculator</h1>
+    <%= form_with model: @calculator, url: calculator_calculate_path, method: :post, local: true, data: { turbo: false } do |f| %>
+      <div class="form-field">
+        <%= f.label :date %>
+        <%= f.date_field :date %>
+      </div>
 
-  <% if @calculator.errors.any? %>
-    <div class="form-errors alert">
-      <p><%= @calculator.errors.full_messages.first %></p>
+      <div class="form-field">
+        <%= f.label :weight, "Weight (kg)" %>
+        <%= f.number_field :weight, step: 0.1 %>
+      </div>
+
+      <div class="form-field">
+        <%= f.label :height, "Height (cm)" %>
+        <%= f.number_field :height, step: 0.1 %>
+      </div>
+
+      <div class="form-field">
+        <%= f.label :waist_line, "Waist Line (cm)" %>
+        <%= f.number_field :waist_line, step: 0.1 %>
+      </div>
+
+      <div class="form-field">
+        <%= f.label :neck_line, "Neck Line (cm)" %>
+        <%= f.number_field :neck_line, step: 0.1 %>
+      </div>
+      
+      <% if current_user.gender == "Female" %>
+        <div class="form-field">
+        <%= f.label :hip, "Hips (cm)" %>
+        <%= f.number_field :hip %>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <p class="notice"><%= flash[:notice] %></p>
+      <% elsif flash[:alert] %>
+        <p class="alert"><%= flash[:alert] %></p>
+      <% end %>
+
+      <div class="form-submit">
+        <%= f.submit "Calculate", class: "submit-btn" %>
+      </div>
+    <% end %>
+
+    <% if @calculator.bmi %>
+      <div class="result-calculator">
+      <p><strong>BMI:</strong> <%= @calculator.bmi %> (<%= @calculator.bmi_range %>)</p>
+    <% end %>
+
+    <% if @calculator.body_fat %>
+        <p><strong>Body Fat Percentage:</strong> <%= @calculator.body_fat %>% 
+          (<%= @calculator.body_fat_range(current_user.gender) %>)
+        </p>
+      </div>
+    <% end %>
+
+    <% if @calculator.errors.any? %>
+      <div class="alert">
+        <%= @calculator.errors.full_messages.join %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="right">
+    <div class="info-box">
+      <h1>What is BMI and Body Fat?</h1>
+      <p><strong>BMI (Body Mass Index)</strong> is a quick screening tool that estimates your body fat based on height and weight. It helps determine if you are underweight, normal weight, overweight, or obese.</p>
+      <p><strong>Body Fat Percentage</strong> provides a more accurate measure of your fitness level by estimating how much of your body is fat. It considers factors like waist and neck size.</p>      
+      <p>This calculator helps you track your progress, understand your health better, and stay motivated on your fitness journey.</p>
     </div>
-  <% end %>
 
-<%= form_with model: @calculator, url: calculator_calculate_path, local: true, data: { turbo: false } do |f| %>
-  <div class="form-field">
-    <%= f.label :date %>
-    <%= f.date_field :date %>
-  </div>
+    <div class="history-logs">
+      <h3>History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>BMI</th>
+            <th>Body Fat %</th>
+            <th>BMI Range</th>
+            <th>Body Fat Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% current_user.calculators.order(created_at: :desc).limit(5).each do |entry| %>
+            <tr>
+              <td><%= entry.date.strftime("%Y-%m-%d") if entry.date %></td>
+              <td><%= entry.bmi %></td>
+              <td><%= entry.body_fat %>%</td>
+              <td><%= entry.bmi_range %></td>
+              <td><%= entry.body_fat_range(current_user.gender) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-  <div class="form-field">
-    <%= f.label :weight, "Weight (kg)" %>
-    <%= f.number_field :weight, step: 0.1 %>
-  </div>
-
-  <div class="form-field">
-    <%= f.label :height, "Height (cm)" %>
-    <%= f.number_field :height, step: 0.1 %>
-  </div>
-
-  <div class="form-field">
-    <%= f.label :waist_line, "Waist Line (cm)" %>
-    <%= f.number_field :waist_line, step: 0.1 %>
-  </div>
-
-  <div class="form-field">
-    <%= f.label :neck_line, "Neck Line (cm)" %>
-    <%= f.number_field :neck_line, step: 0.1 %>
-  </div>
-  
-    <% if current_user.gender == "Female" %>
-    <div class="form-field">
-    <%= f.label :hip, "Hips (cm)" %>
-    <%= f.number_field :hip %>
+      <div class="view-all">
+        <%= link_to "View All", calculator_history_path %>
+      </div>
     </div>
-  <% end %>
-
-  <% if flash[:notice] %>
-    <p class="notice"><%= flash[:notice] %></p>
-  <% elsif flash[:alert] %>
-    <p class="alert"><%= flash[:alert] %></p>
-  <% end %>
-
-  <div class="form-submit">
-    <%= f.submit "Calculate", class: "submit-btn" %>
   </div>
-<% end %>
-
-<% if @calculator.bmi %>
-  <div class="result-calculator">
-  <p><strong>BMI:</strong> <%= @calculator.bmi %></p>
-<% end %>
-
-<% if @calculator.body_fat %>
-  <p><strong>Body Fat Percentage:</strong> <%= @calculator.body_fat %>%</p>
-  </div>
-<% end %>
+</div>

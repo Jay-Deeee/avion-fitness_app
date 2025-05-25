@@ -44,7 +44,17 @@ class CalculatorsController < ApplicationController
 
   @calculator.body_fat = body_fat.round(2)
 
+  if @calculator.save
+    flash[:notice] = "Results saved."
+  else
+    flash[:alert] = "Error recording results."
+  end
+
   render :show
+end
+
+def index
+  @calculations = current_user.calculators.order(created_at: :desc)
 end
 
 private

@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const display = document.getElementById("timer-display");
   const beep = document.getElementById("timer-beep");
 
+  if (!startBtn || !pauseBtn || !resetBtn || !durationInput || !display || !beep) {
+    return;
+  }
+
   let countdown;
   let remainingTime = parseInt(durationInput.value, 10);
   let defaultDuration = remainingTime;

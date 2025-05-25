@@ -4,7 +4,7 @@ class WorkoutsController < ApplicationController
   
   def index
     if params[:performed_on].present?
-      @selected_date = Date.parse(params[:performed_on])
+      @selected_date = Date.parse(params[:performed_on]) rescue nil
       @workout = current_user.workouts.find_by(performed_on: @selected_date)
     else
       @workouts = current_user.workouts.order(performed_on: :desc)
@@ -23,7 +23,7 @@ class WorkoutsController < ApplicationController
     @workout = current_user.workouts.new(workout_params)
 
     if @workout.save
-      redirect_to request.referer || root_path, notice: "Workout for: '#{@workout.performed_on.strftime("%b %d, %Y")}' saved successfully."
+      redirect_to request.referer || workouts_path, notice: "Workout for: '#{@workout.performed_on.strftime("%b %d, %Y")}' saved successfully."
     else
       flash[:alert] = "Failed to save workout."
       render :new, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class WorkoutsController < ApplicationController
 
   def destroy
     @workout.destroy
-    redirect_to root_path, status: :see_other, notice: "Category has been deleted."
+    redirect_to workouts_path, status: :see_other, notice: "Workout has been deleted."
   end
 
   private
@@ -57,6 +57,6 @@ class WorkoutsController < ApplicationController
   end
 
   # def record_not_found
-  #   redirect_to trader_transactions_path, alert: "Record does not exist."
+  #   redirect_to workouts_path, alert: "Record does not exist."
   # end
 end

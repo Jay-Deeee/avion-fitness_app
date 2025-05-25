@@ -1,8 +1,8 @@
 class ExercisesController < ApplicationController
-  before_action :set_workout, only: [:create]
+  before_action :set_workout
+  before_action :set_exercise, except: [:new, :create]
 
   def new
-    @workout = Workout.find(params[:workout_id])
     @exercise = @workout.exercises.new
     @exercise_types = ExerciseType.all.order(:name)
   end
@@ -18,13 +18,20 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
+    if @exercise.update(comment_params)
+      redirect_to request.referer || workouts_path, notice: "Comment has been updated."
+    else
+      flash[:alert] = "Failed to update exercise."
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    @exercise.destroy
+    redirect_to exercise_types_path, notice: "Exercise type was successfully deleted."
   end
 
   private

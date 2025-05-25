@@ -23,7 +23,7 @@ class WorkoutsController < ApplicationController
     @workout = current_user.workouts.new(workout_params)
 
     if @workout.save
-      redirect_to request.referer || root_path, notice: "Workout for: '#{@workout.performed_on.strftime("%b %d, %Y")}' saved successfully."
+      redirect_to request.referer || workouts_path, notice: "Workout for: '#{@workout.performed_on.strftime("%b %d, %Y")}' saved successfully."
     else
       flash[:alert] = "Failed to save workout."
       render :new, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class WorkoutsController < ApplicationController
 
   def destroy
     @workout.destroy
-    redirect_to root_path, status: :see_other, notice: "Category has been deleted."
+    redirect_to workouts_path, status: :see_other, notice: "Workout has been deleted."
   end
 
   private

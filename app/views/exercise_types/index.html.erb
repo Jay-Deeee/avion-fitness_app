@@ -1,2 +1,8 @@
-<h1>ExerciseTypes#index</h1>
-<p>Find me in app/views/exercise_types/index.html.erb</p>
+<% @categories.each do |category| %>
+  <h3><%= category.titleize %></h3>
+  <ul>
+    <% @exercise_types[category]&.each do |exercise_type| %>
+      <li><%= exercise_type.name %></li>
+    <% end %>
+  </ul>
+<% end %>

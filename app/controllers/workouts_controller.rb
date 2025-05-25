@@ -4,7 +4,7 @@ class WorkoutsController < ApplicationController
   
   def index
     if params[:performed_on].present?
-      @selected_date = Date.parse(params[:performed_on])
+      @selected_date = Date.parse(params[:performed_on]) rescue nil
       @workout = current_user.workouts.find_by(performed_on: @selected_date)
     else
       @workouts = current_user.workouts.order(performed_on: :desc)
@@ -57,6 +57,6 @@ class WorkoutsController < ApplicationController
   end
 
   # def record_not_found
-  #   redirect_to trader_transactions_path, alert: "Record does not exist."
+  #   redirect_to workouts_path, alert: "Record does not exist."
   # end
 end

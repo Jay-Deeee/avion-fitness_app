@@ -1,2 +1,11 @@
-<h1>Pages#dashboard</h1>
-<p>Find me in app/views/pages/dashboard.html.erb</p>
+<div class="row dashboard">
+  <section class="col-lg-3 mt-5 border-end border-secondary d-flex align-items-center flex-column p-2">
+    <%= render "dbleft", q: @quote%>
+  </section>
+  <section class="col-lg-6  mt-5 d-flex align-items-center flex-column p-2">
+    <%= render "dbmid" %>
+  </section>
+  <section class="col-lg-3 mt-5 border-start border-secondary p-2 d-flex align-items-center flex-column">
+    <h3>Summary</h3>
+  </section>
+</div>

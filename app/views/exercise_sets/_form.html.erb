@@ -11,15 +11,14 @@
   <% end %>
 
   <div>
-    <%= f.label :value %>
-    <%= f.number_field :value %>
-    <small>(in <%= exercise_set.unit %>)</small>
+    <%= f.label :weight %>
+    <%= f.number_field :weight, step: 0.1 %>
+    <small>kg</small>
   </div>
 
   <div>
-    <%= f.label :weight %>
-    <%= f.number_field :weight, step: 0.1 %>
-    <small>(kg)</small>
+    <%= f.label :value, exercise_set.unit.capitalize %>
+    <%= f.number_field :value %>
   </div>
 
   <%= f.submit class: "btn btn-primary" %>

@@ -1,6 +1,5 @@
 class ExercisesController < ApplicationController
   before_action :set_workout
-  before_action :set_exercise, except: [:new, :create]
   # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
@@ -37,21 +36,8 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit
-    load_exercise_types
-  end
-
-  def update
-    if @exercise.update(exercise_params)
-      redirect_to workout_path(@workout), notice: "Exercise has been updated."
-    else
-      flash[:alert] = "Failed to update exercise."
-      load_exercise_types
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
   def destroy
+    @exercise = @workout.exercises.find(params[:id])
     @exercise.destroy
     redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise was successfully deleted."
   end
@@ -60,10 +46,6 @@ class ExercisesController < ApplicationController
 
   def set_workout
     @workout = current_user.workouts.find(params[:workout_id])
-  end
-
-  def set_exercise
-    @exercise = @workout.exercises.find(params[:id])
   end
   
   def exercise_params

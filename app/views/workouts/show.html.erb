@@ -1,8 +1,14 @@
 <%= render "shared/timer" %>
 
+<h3> <%= @workout.performed_on.strftime("%B %d, %Y") %> </h3>
+<div>
+  <h5><strong><%= @workout.name %></strong></h5>
+  <%= link_to "Edit", edit_workout_path(@workout) %>
+</div>
+
 <% @exercises.each do |exercise| %>
   <div class="exercise">
-    <h3><%= exercise.exercise_type.name %></h3>
+    <h5><%= exercise.exercise_type.name %></h5>
 
     <% if exercise.exercise_sets.any? %>
       <ul>

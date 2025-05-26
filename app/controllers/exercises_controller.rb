@@ -9,12 +9,29 @@ class ExercisesController < ApplicationController
   end
 
   def create
+    if params[:new_exercise_type_name].present?
+      new_type = ExerciseType.new(
+        name: params[:new_exercise_type_name],
+        category: params[:exercise_type_category],
+        unit: params[:new_exercise_type_unit]
+      )
+  
+      if new_type.save
+        params[:exercise][:exercise_type_id] = new_type.id
+      else
+        flash.now[:alert] = "Failed to create new exercise type."
+        load_exercise_types
+        @exercise = @workout.exercises.new(exercise_params)
+        return render :new, status: :unprocessable_entity
+      end
+    end
+
     @exercise = @workout.exercises.new(exercise_params)
 
     if @exercise.save
       redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise saved!"
     else
-      flash.now[:alert] = "Failed to save task."
+      flash.now[:alert] = "Failed to save exercise."
       load_exercise_types
       render :new, status: :unprocessable_entity
     end

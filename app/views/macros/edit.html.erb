@@ -1,0 +1,29 @@
+<h2>Edit Macro</h2>
+
+<%= form_with model: @macro, url: macro_path(@macro), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :calories %>
+    <%= f.number_field :calories, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :protein %>
+    <%= f.number_field :protein, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :carbohydrates %>
+    <%= f.number_field :carbohydrates, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :fats %>
+    <%= f.number_field :fats, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.submit "Update Macro" %>
+  </div>
+<% end %>
+
+<%= link_to "Back", macros_path(date: @macro.created_at.to_date) %>

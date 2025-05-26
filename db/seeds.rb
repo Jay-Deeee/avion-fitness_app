@@ -71,7 +71,7 @@ end
 "You can’t complain about the results you didn’t get from the work you didn’t do.",
 "If you’re waiting for motivation, stay on the couch. The gym is for doers.",
 "That six-pack won’t build itself — unfortunately, neither will your discipline.",
-"You said 'tomorrow' three months ago.",
+"You said 'tomorrow' yesterday.",
 "Stop calling it your ‘winter body’ — it’s been winter for 4 years now.",
 "Your body isn't Amazon Prime. Results won’t show up in two days.",
 "Sweat is your fat crying. Let it sob uncontrollably.",

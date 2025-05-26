@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_24_062841) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_26_124026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_062841) do
     t.index ["user_id"], name: "index_calculators_on_user_id"
   end
 
+  create_table "exercise_sets", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.integer "value"
+    t.float "weight"
+    t.boolean "completed", default: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_exercise_sets_on_exercise_id"
+  end
+
   create_table "exercise_types", force: :cascade do |t|
     t.string "name"
     t.integer "category"
@@ -40,9 +51,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_062841) do
   create_table "exercises", force: :cascade do |t|
     t.bigint "workout_id", null: false
     t.bigint "exercise_type_id", null: false
-    t.integer "sets"
-    t.integer "value"
-    t.float "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["exercise_type_id"], name: "index_exercises_on_exercise_type_id"
@@ -95,6 +103,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_24_062841) do
   end
 
   add_foreign_key "calculators", "users"
+  add_foreign_key "exercise_sets", "exercises"
   add_foreign_key "exercises", "exercise_types"
   add_foreign_key "exercises", "workouts"
   add_foreign_key "macros", "users"

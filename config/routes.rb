@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   get "calculator/history", to: "calculators#index", as: :calculator_history
 
   resources :workouts do
-    resources :exercises, except: [ :index, :show ]
+    resources :exercises, except: [ :index, :show ] do
+      resources :exercise_sets, except: [ :index, :show ] 
+    end
   end
 
   resources :exercise_types, except: :show do

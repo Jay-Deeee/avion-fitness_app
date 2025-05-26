@@ -5,7 +5,7 @@ class ExercisesController < ApplicationController
 
   def new
     @exercise = @workout.exercises.new
-    @exercise_types = ExerciseType.all.order(:name)
+    load_exercise_types
   end
 
   def create
@@ -15,17 +15,21 @@ class ExercisesController < ApplicationController
       redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise saved!"
     else
       flash.now[:alert] = "Failed to save task."
+      load_exercise_types
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; end
+  def edit
+    load_exercise_types
+  end
 
   def update
     if @exercise.update(exercise_params)
       redirect_to workout_path(@workout), notice: "Exercise has been updated."
     else
       flash[:alert] = "Failed to update exercise."
+      load_exercise_types
       render :edit, status: :unprocessable_entity
     end
   end
@@ -46,7 +50,11 @@ class ExercisesController < ApplicationController
   end
   
   def exercise_params
-    params.require(:exercise).permit(:exercise_type_id, :sets, :value, :weight)
+    params.require(:exercise).permit(:exercise_type_id)
+  end
+
+  def load_exercise_types
+    @exercise_types = ExerciseType.all.order(:name)
   end
 
   # def record_not_found

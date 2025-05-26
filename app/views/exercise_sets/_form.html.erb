@@ -1,0 +1,26 @@
+<%= form_with(model: [@workout, @exercise, @exercise_set]) do |f| %>
+  <% if exercise_set.errors.any? %>
+    <div class="error-messages">
+      <h4><%= pluralize(exercise_set.errors.count, "error") %> prohibited this set from being saved:</h4>
+      <ul>
+        <% exercise_set.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :value %>
+    <%= f.number_field :value %>
+    <small>(in <%= exercise_set.unit %>)</small>
+  </div>
+
+  <div>
+    <%= f.label :weight %>
+    <%= f.number_field :weight, step: 0.1 %>
+    <small>(kg)</small>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

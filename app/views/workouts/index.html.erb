@@ -25,10 +25,21 @@
             <% @workout.exercises.each do |exercise| %>
               <div>
                 <h5><%= exercise.exercise_type.name %></h5>
-                <ul>
-                  <li>Sets: <%= exercise.sets %></li>
-                  <li>Weight: <%= exercise.weight %> lbs</li>
-                </ul>
+
+                <% if exercise.exercise_sets.any? %>
+                  <ul>
+                    <% exercise.exercise_sets.order(:position).each do |set| %>
+                      <li>
+                        Set <%= set.position %>: 
+                        <%= set.display_value %> 
+                        <% if set.weight.present? %> @ <%= set.weight %> kg <% end %>
+                        <% if set.completed %> ✅ <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% else %>
+                  <p><em>No sets recorded yet.</em></p>
+                <% end %>
               </div>
             <% end %>
           <% else %>

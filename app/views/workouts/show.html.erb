@@ -1,22 +1,27 @@
 <%= render "shared/timer" %>
 
-<div>
-  <h3><%= @workout.name %></h3>
+<% @exercises.each do |exercise| %>
+  <div class="exercise">
+    <h3><%= exercise.exercise_type.name %></h3>
 
-  <% if @workout.exercises.any? %>
-    <% @workout.exercises.each do |exercise| %>
-      <div>
-        <h5><%= exercise.exercise_type.name %></h5>
-        <ul>
-          <li>Sets: <%= exercise.sets %></li>
-          <li>Weight: <%= exercise.weight %> lbs</li>
-        </ul>
-      </div>
+    <% if exercise.exercise_sets.any? %>
+      <ul>
+        <% exercise.exercise_sets.order(:position).each do |set| %>
+          <li>
+            Set <%= set.position %>: 
+            <%= set.display_value %> 
+            <% if set.weight.present? %> @ <%= set.weight %> kg <% end %>
+            <% if set.completed %> ✅ <% end %>
+            <%= link_to 'Edit', edit_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><em>No sets recorded yet.</em></p>
     <% end %>
-  <% else %>
-    <br />
-    <em>Workout log empty</em>
-  <% end %>
-</div>
+
+    <%= link_to 'Add Set', new_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+  </div>
+<% end %>
 
 <%= link_to "Back", workouts_path %>

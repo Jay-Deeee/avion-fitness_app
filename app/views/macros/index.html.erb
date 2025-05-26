@@ -12,13 +12,15 @@
       />
     </div>
   </div>
-
+  
   <div id="macro-section" style="margin-top: 2rem;">
     <% if params[:date].present? %>
       <h3><%= Date.parse(params[:date]).strftime("%B %d, %Y") %></h3>
+      <br>
 
       <% if @target_macro %>
-        <h4>Target Macros</h4>
+        <h4>Target Macros</h4> 
+        <%= link_to "Edit Target", edit_macro_path(@target_macro) %>
         <ul>
           <li>Calories: <%= @target_macro.calories %> kcal</li>
           <li>Protein: <%= @target_macro.protein %>g</li>
@@ -29,33 +31,64 @@
         <p>No target set yet. <%= link_to "Set Target", new_macro_path %></p>
       <% end %>
 
-      <h4>Logged Meals</h4>
-      <% if @macros.any? %>
-        <ul>
-          <% @macros.each do |macro| %>
-            <li>
-              <strong><%= macro.name %></strong> -
-              <%= macro.calories %> kcal,
-              P: <%= macro.protein %>g,
-              C: <%= macro.carbohydrates %>g,
-              F: <%= macro.fats %>g
-              (<%= macro.meal&.capitalize %>)
-            </li>
-          <% end %>
-        </ul>
+      <% ["breakfast", "lunch", "dinner", "snacks"].each do |meal_type| %>
+        <%= link_to meal_type.capitalize, search_macros_path(meal: meal_type), class: "btn btn-outline-secondary m-1" %>
+      <% end %>
+      <br><br>
 
-        <h5>Total for this day:</h5>
-        <ul>
-          <li>Calories: <%= @totals[:calories] %></li>
-          <li>Protein: <%= @totals[:protein] %>g</li>
-          <li>Carbs: <%= @totals[:carbohydrates] %>g</li>
-          <li>Fats: <%= @totals[:fats] %>g</li>
-        </ul>
-      <% else %>
-        <p><em>No meals logged for this day.</em></p>
+      <h4>Logged Meals</h4>
+      <% grouped_macros = @macros.group_by { |macro| macro.meal || 'snacks' } %>
+      <% ["breakfast", "lunch", "dinner", "snacks"].each do |meal_type| %>
+        <h5><%= meal_type.capitalize %></h5>
+        <% if grouped_macros[meal_type] %>
+          <ul>
+            <% grouped_macros[meal_type].each do |macro| %>
+              <li>
+                <strong><%= macro.name %></strong> -
+                <%= macro.calories %> kcal,
+                P: <%= macro.protein %>g,
+                C: <%= macro.carbohydrates %>g,
+                F: <%= macro.fats %>g
+                (<%= macro.meal&.capitalize %>)
+                <%= link_to "Delete", macro_path(macro, date: params[:date]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p><em>No meals logged.</em></p>
+        <% end %>
       <% end %>
 
-      <%= link_to "Search & Log Food", search_macros_path, class: "btn btn-primary" %>
+      <h5>Total for this day:</h5>
+      <ul>
+        <li>Calories: <%= @totals[:calories] %></li>
+        <li>Protein: <%= @totals[:protein] %>g</li>
+        <li>Carbs: <%= @totals[:carbohydrates] %>g</li>
+        <li>Fats: <%= @totals[:fats] %>g</li>
+      </ul>
+      <% if @target_macro %>
+        <h6>Summary vs Target</h6>
+        <ul>
+          <li>Calories: <%= @totals[:calories] %> / <%= @target_macro.calories %> (<%= (@totals[:calories].to_f / @target_macro.calories * 100).round %>%)</li>
+          <li>Protein: <%= @totals[:protein] %> / <%= @target_macro.protein %>g (<%= (@totals[:protein].to_f / @target_macro.protein * 100).round %>%)</li>
+          <li>Carbs: <%= @totals[:carbohydrates] %> / <%= @target_macro.carbohydrates %>g (<%= (@totals[:carbohydrates].to_f / @target_macro.carbohydrates * 100).round %>%)</li>
+          <li>Fats: <%= @totals[:fats] %> / <%= @target_macro.fats %>g (<%= (@totals[:fats].to_f / @target_macro.fats * 100).round %>%)</li>
+        </ul>
+      <% end %>
+
+      <h5>Quick Log</h5>
+      <%= form_with url: macros_path, method: :post, local: true do |f| %>
+        <%= hidden_field_tag :date, params[:date] %>
+        <%= f.text_field :name, placeholder: "Meal name", required: true %>
+        <%= f.number_field :calories, placeholder: "Calories", required: true %>
+        <%= f.number_field :protein, placeholder: "Protein (g)", required: true, step: 0.1 %>
+        <%= f.number_field :carbohydrates, placeholder: "Carbs (g)", required: true, step: 0.1 %>
+        <%= f.number_field :fats, placeholder: "Fats (g)", required: true, step: 0.1 %>
+        <%= f.select :meal, options_for_select(['breakfast', 'lunch', 'dinner', 'snacks']), include_blank: "Select meal type" %>
+        <%= f.submit "Log Meal", class: "btn btn-success btn-sm" %>
+      <% end %>
+
+      <%= link_to "Search Food", search_macros_path, class: "btn btn-primary mt-3" %>
     <% else %>
       <h4><em>No date selected.</em></h4>
     <% end %>

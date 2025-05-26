@@ -34,6 +34,20 @@ class MacrosController < ApplicationController
     end
   end
 
+  def edit
+    @macro = current_user.macros.find(params[:id])
+  end
+
+  def update
+    @macro = current_user.macros.find(params[:id])
+
+    if @macro.update(macro_params)
+      redirect_to macros_path(date: @macro.created_at.to_date), notice: "Macro updated successfully!"
+    else
+      render :edit
+    end
+  end
+
  def search
     # Get OAuth token from FatSecret
     auth_response = HTTParty.post("https://oauth.fatsecret.com/connect/token",

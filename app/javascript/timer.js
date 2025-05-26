@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbo:load", function () {
   const startBtn = document.getElementById("start-timer");
   const pauseBtn = document.getElementById("pause-timer");
   const resetBtn = document.getElementById("reset-timer");

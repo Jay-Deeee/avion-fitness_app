@@ -60,15 +60,17 @@ end
 gem "devise", "~> 4.9", ">= 4.9.4"
 
 group :development, :test do
-  gem 'rspec-rails', '~> 8.0.0'
+  gem "rspec-rails", "~> 8.0.0"
 end
 
 group :development, :test do
-  gem 'factory_bot_rails'
+  gem "factory_bot_rails"
 end
 
-gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
+gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
 
-gem 'sassc-rails'
+gem "sassc-rails"
 
-gem 'httparty'
+gem "httparty"
+
+gem "kaminari"

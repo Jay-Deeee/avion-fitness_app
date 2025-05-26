@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   root "pages#dashboard"
-  
+
   devise_for :users
-  get 'calculator', to: 'calculators#show', as: :calculator
-  post 'calculator/calculate', to: 'calculators#calculate', as: :calculator_calculate  
+  get "calculator", to: "calculators#show", as: :calculator
+  post "calculator/calculate", to: "calculators#calculate", as: :calculator_calculate
+  get "calculator/history", to: "calculators#index", as: :calculator_history
 
   resources :workouts do
-    resources :exercises, except: [:index, :show]
+    resources :exercises, except: [ :index, :show ]
   end
 
   resources :exercise_types, except: :show do
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :macros, only: [:index, :create, :new] do
+  resources :macros, only: [ :index, :create, :new ] do
     collection do
       get :search
       post :log

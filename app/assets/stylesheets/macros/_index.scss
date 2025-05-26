@@ -1,8 +1,8 @@
-#workout-container {
+#macro-container {
   display: flex;
   justify-content: space-around;
 
-  #workout-calendar {
+  #macro-calendar {
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -12,7 +12,7 @@
     // }
   }
 
-  #workout-section {
+  #macro-section {
     min-width: 50vh;
   }
 }

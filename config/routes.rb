@@ -21,10 +21,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :macros, only: [ :index, :create, :new ] do
+  resources :macros, only: [:index, :new, :create, :edit, :update, :destroy] do
     collection do
       get :search
       post :log
+    end
+    member do
+      get :edit
+      patch :update
+      delete :destroy
     end
   end
 end

@@ -1,4 +1,5 @@
-ExerciseType.create!([
+
+  [
   # Chest
   { name: "Bench Press", category: :chest, unit: :reps },
   { name: "Butterflies", category: :chest, unit: :reps },
@@ -56,4 +57,30 @@ ExerciseType.create!([
   { name: "Plank", category: :core, unit: :seconds },
   { name: "Seated Pike Lift", category: :core, unit: :reps },
   { name: "Side Plank", category: :core, unit: :seconds }
-])
+].each do |exercise|
+  ExerciseType.find_or_create_by!(name: exercise[:name]) do |e|
+    e.category = exercise[:category]
+    e.unit = exercise[:unit]
+  end
+end
+
+# Seed Quotes
+[
+"Your excuses burn zero calories — try again.",
+"Some people want a hot body. Others actually work for it. Be the latter.",
+"You can’t complain about the results you didn’t get from the work you didn’t do.",
+"If you’re waiting for motivation, stay on the couch. The gym is for doers.",
+"That six-pack won’t build itself — unfortunately, neither will your discipline.",
+"You said 'tomorrow' yesterday.",
+"Stop calling it your ‘winter body’ — it’s been winter for 4 years now.",
+"Your body isn't Amazon Prime. Results won’t show up in two days.",
+"Sweat is your fat crying. Let it sob uncontrollably.",
+"Skipping leg day? Bold move for someone who wants to walk tomorrow.",
+"Keep lifting… your standards too.",
+"Your workout is your therapist, but cheaper and doesn’t listen to whining.",
+"You can’t Photoshop your body in real life. Hit the gym.",
+"Train like your ex is watching.",
+"You can rest when you're hot. Right now, you're just sweaty."
+].each do |text|
+  Quote.find_or_create_by!(quote: text)
+end

@@ -13,7 +13,13 @@ Rails.application.routes.draw do
 
   resources :workouts do
     resources :exercises, except: [ :index, :show ] do
-      resources :exercise_sets, except: [ :index, :show ] 
+      resources :exercise_sets, except: [ :index, :show ]
+    end
+  end
+
+  resources :exercise_sets, only: [] do
+    member do
+      patch :toggle_completed
     end
   end
 

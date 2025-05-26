@@ -8,11 +8,23 @@
       <ul>
         <% exercise.exercise_sets.order(:position).each do |set| %>
           <li>
-            Set <%= set.position %>: 
-            <%= set.display_value %> 
-            <% if set.weight.present? %> @ <%= set.weight %> kg <% end %>
-            <% if set.completed %> ✅ <% end %>
-            <%= link_to 'Edit', edit_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+            <ul class="set-container">
+              <li>
+                <%= link_to 'Edit', edit_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+              </li>
+              <li><%= set.position %></li>
+              <li><%= set.display_value %></li>
+              <li>
+                <% if set.weight.present? %> 
+                  <%= set.weight %> kg 
+                <% else %>
+                  0.0 kg
+                <% end %>
+              </li>
+              <li>
+                <%= check_box_tag "completed", set.id, set.completed, class: "complete-checkbox", data: { controller: "set-complete", set_complete_target: "checkbox", action: "set-complete#toggle", set_id: set.id } %>
+              </li>
+            </ul>
           </li>
         <% end %>
       </ul>

@@ -26,8 +26,12 @@
     <% meal_macros.each do |macro| %>
       <li>
         <strong><%= macro.name %></strong><br>
-        Calories: <%= macro.calories %>, Protein: <%= macro.protein %>g, Carbs: <%= macro.carbohydrates %>g, Fats: <%= macro.fats %>g
-        
+        Calories: <%= macro.calories %>, 
+        Protein: <%= macro.protein %>g, 
+        Carbs: <%= macro.carbohydrates %>g, 
+        Fats: <%= macro.fats %>g
+        (<%= macro.meal&.capitalize %>)
+        <%= link_to "Delete", macro_path(macro, date: params[:date]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
       </li>
     <% end %>
   </ul>

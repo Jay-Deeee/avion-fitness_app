@@ -1,5 +1,6 @@
 class ExercisesController < ApplicationController
   before_action :set_workout
+  before_action :set_exercise, only: [:destroy, :move_up, :move_down]
   # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
@@ -37,15 +38,28 @@ class ExercisesController < ApplicationController
   end
 
   def destroy
-    @exercise = @workout.exercises.find(params[:id])
     @exercise.destroy
     redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise was successfully deleted."
+  end
+
+  def move_up
+    @exercise.move_up
+    redirect_back fallback_location: workouts_path(performed_on: @workout.performed_on)
+  end
+  
+  def move_down
+    @exercise.move_down
+    redirect_back fallback_location: workouts_path(performed_on: @workout.performed_on)
   end
 
   private
 
   def set_workout
     @workout = current_user.workouts.find(params[:workout_id])
+  end
+
+  def set_exercise
+    @exercise = @workout.exercises.find(params[:id])
   end
   
   def exercise_params

@@ -1,5 +1,6 @@
 @import "navbar";
 @import "workouts/index";
+@import "workouts/show";
 @import "macros/index";
 @import "calculators";
 @import "dashboard";
@@ -12,4 +13,18 @@ body {
     rgba(164, 201, 215, 1) 23%,
     rgba(234, 242, 244, 1) 65%
   );
+}
+
+.color-red {
+  color: red;
+}
+
+.black-50 {
+  color: #00000050;
+}
+
+.up-down-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

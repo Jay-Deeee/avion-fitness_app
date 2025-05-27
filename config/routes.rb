@@ -13,7 +13,14 @@ Rails.application.routes.draw do
 
   resources :workouts do
     resources :exercises, only: [ :new, :create, :destroy ] do
-      resources :exercise_sets, except: [ :index, :show ]
+      member do
+        patch :move_up
+        patch :move_down
+      end
+      resources :exercise_sets, except: [ :index, :show ] do
+        patch :move_up
+        patch :move_down
+      end
     end
   end
 
@@ -28,6 +35,8 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
+
+  patch "/users/:id/update_rest_time", to: "users#update_rest_time"
 
   resources :macros, only: [:index, :new, :create, :edit, :update, :destroy] do
     collection do

@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["checkbox"]
 
-  connect() {
-    console.log("SetCompleteController connected")
-  }
-
   toggle(event) {
     const checkbox = event.target
     const setId = checkbox.dataset.setId

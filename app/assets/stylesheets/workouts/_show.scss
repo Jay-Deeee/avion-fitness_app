@@ -1,0 +1,14 @@
+.exercise {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+
+    .set-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 300px;
+      padding-left: 0;
+    }
+  }
+}

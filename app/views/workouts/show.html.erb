@@ -1,9 +1,11 @@
 <%= render "shared/timer" %>
 
 <h3> <%= @workout.performed_on.strftime("%B %d, %Y") %> </h3>
-<div>
+<div class="exercise-title">
   <h5><strong><%= @workout.name %></strong></h5>
-  <%= link_to "Edit", edit_workout_path(@workout) %>
+  <%= link_to edit_workout_path(@workout) do %>
+    <i class="fa-solid fa-pen"></i>
+  <% end %>
 </div>
 
 <% @exercises.each do |exercise| %>

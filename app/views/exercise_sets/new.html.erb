@@ -1,0 +1,5 @@
+<h2>New Set for <%= @exercise.exercise_type.name %> </h2>
+
+<%= render "form", exercise: @exercise, exercise_set: @exercise_set %>
+
+<%= link_to "Back", workout_path(@exercise.workout) %>

@@ -1,8 +1,12 @@
-<div id="rest-timer">
+<div 
+  id="rest-timer" 
+  data-user-id="<%= current_user.id %>" 
+  data-initial-rest-time="<%= current_user.rest_time %>">
   <h3>Rest Timer</h3>
 
-  <label for="rest-duration">Duration (seconds):</label>
-  <input type="number" id="rest-duration" value="60" min="1" step="1">
+  <label for="rest-time-input">Rest Time:</label>
+  <input type="number" id="rest-time-input" min="10" max="600" />
+  <span>s</span>
 
   <h2 id="timer-display" style="margin-top: 1rem;">01:00</h2>
 

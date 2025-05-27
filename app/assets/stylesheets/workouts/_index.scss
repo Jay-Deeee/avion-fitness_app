@@ -14,5 +14,19 @@
 
   #workout-section {
     min-width: 50vh;
+
+    .exercise-container {
+      display: flex;
+
+      div {
+        .exercise-name-container {
+          display: flex;
+        }
+
+        ul {
+          list-style-type: none;
+        }
+      }
+    }
   }
 }

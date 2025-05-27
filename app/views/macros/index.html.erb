@@ -45,8 +45,9 @@
         <li>Fats: <%= @totals[:fats] %>g</li>
       </ul>
       <% if @target_macro %>
-        <h6>Summary vs Target</h6>
-        <ul>
+      
+      <h6>Summary vs Target</h6>
+      <ul>
           <li>Calories: <%= @totals[:calories] %> / <%= @target_macro.calories %> (<%= (@totals[:calories].to_f / @target_macro.calories * 100).round %>%)</li>
           <li>Protein: <%= @totals[:protein] %> / <%= @target_macro.protein %>g (<%= (@totals[:protein].to_f / @target_macro.protein * 100).round %>%)</li>
           <li>Carbs: <%= @totals[:carbohydrates] %> / <%= @target_macro.carbohydrates %>g (<%= (@totals[:carbohydrates].to_f / @target_macro.carbohydrates * 100).round %>%)</li>

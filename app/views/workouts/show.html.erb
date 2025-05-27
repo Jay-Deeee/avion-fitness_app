@@ -20,6 +20,7 @@
                   <%= link_to workout_exercise_exercise_set_move_up_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
                     <i class="fa-regular fa-square-caret-up"></i>
                   <% end unless set == exercise.exercise_sets.first %>
+
                   <%= link_to workout_exercise_exercise_set_move_down_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %> 
                     <i class="fa-regular fa-square-caret-down"></i>
                   <% end unless set == exercise.exercise_sets.last %>
@@ -41,6 +42,11 @@
               </li>
               <li>
                 <%= check_box_tag "completed", set.id, set.completed, class: "complete-checkbox", data: { controller: "set-complete", set_complete_target: "checkbox", action: "set-complete#toggle", set_id: set.id } %>
+              </li>
+              <li>
+                <%= link_to workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: set), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
+                  <i class="fa-solid fa-xmark"></i>
+                <% end %>
               </li>
             </ul>
           </li>

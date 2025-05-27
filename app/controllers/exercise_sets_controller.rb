@@ -1,6 +1,6 @@
 class ExerciseSetsController < ApplicationController
   before_action :set_workout, :set_exercise, except: [:toggle_completed]
-  before_action :set_exercise_set, except: [:new, :create, :toggle_completed]
+  before_action :set_exercise_set, only: [:edit, :update, :destroy]
   # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
@@ -43,14 +43,16 @@ class ExerciseSetsController < ApplicationController
   end
 
   def move_up
+    @exercise_set = @exercise.exercise_sets.find(params[:exercise_set_id])
     @exercise_set.move_up
     redirect_back fallback_location: workout_path(@exercise.workout)
   end
   
   def move_down
+    @exercise_set = @exercise.exercise_sets.find(params[:exercise_set_id])
     @exercise_set.move_down
     redirect_back fallback_location: workout_path(@exercise.workout)
-  end  
+  end
 
   private
 

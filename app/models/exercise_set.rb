@@ -47,11 +47,11 @@ class ExerciseSet < ApplicationRecord
   end
 
   def exercise_set_above
-    exercise.exercise_sets.where("position < ?", position).order(position: :desc).first
+    exercise.exercise_sets.where("position < ?", position).reorder(position: :desc).first
   end
 
   def exercise_set_below
-    exercise.exercise_sets.where("position > ?", position).order(position: :asc).first
+    exercise.exercise_sets.where("position > ?", position).reorder(position: :asc).first
   end
 
   def swap_with(other)

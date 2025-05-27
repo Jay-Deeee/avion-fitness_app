@@ -22,11 +22,11 @@ class Exercise < ApplicationRecord
   end
 
   def exercise_above
-    workout.exercises.where("position < ?", position).order(position: :desc).first
+    workout.exercises.where("position < ?", position).reorder(position: :desc).first
   end
 
   def exercise_below
-    workout.exercises.where("position > ?", position).order(position: :asc).first
+    workout.exercises.where("position > ?", position).reorder(position: :asc).first
   end
 
   def swap_with(other)

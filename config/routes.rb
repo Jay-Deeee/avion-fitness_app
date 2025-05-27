@@ -21,11 +21,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :macros, only: [:index, :new, :create, :edit, :update, :destroy] do
+  resources :macros do
     collection do
+      get :meal, to: "macros#show", as: :macro  
       get :search
       post :log
+      post :add_macros
     end
+
     member do
       get :edit
       patch :update

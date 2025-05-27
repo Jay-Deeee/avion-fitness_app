@@ -1,6 +1,8 @@
-<h2>Search Results</h2>
-
+<!-- Search Food -->
+<%# <h5>Search Food</h5> %>
 <%= form_with url: search_macros_path, method: :get, local: true do |form| %>
+  <%= hidden_field_tag :meal, params[:meal] %>
+  <%= hidden_field_tag :date, params[:date] %>
   <%= form.label :query, "Search for food:" %>
   <%= form.text_field :query %>
   <%= form.submit "Search" %>
@@ -10,10 +12,20 @@
   <ul>
     <% @results.each do |food| %>
       <li><strong><%= food["food_name"] %></strong> - <%= food["food_description"] %></li>
+      <%= button_to "✚", add_macros_macros_path, method: :post, 
+        params: {macro: {
+          calories: 25, 
+          protein: 25,
+          carbohydrates: 25,
+          fats: 25,
+          user_id: 3
+        } }%>
     <% end %>
   </ul>
 <% elsif params[:query].present? %>
   <p>No results found for "<%= params[:query] %>".</p>
 <% end %>
+<br>
+<br>
 
 

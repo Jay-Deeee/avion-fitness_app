@@ -15,7 +15,7 @@
   
 .form-field {
   background: #f9f9f9;
-  border-left: 5px solid #ffca28;
+  border-left: 5px solid #183ce0;
   padding: .5rem;
   margin-bottom: 1rem;
   
@@ -57,20 +57,20 @@
   
 .submit-btn {
   padding: 0.75rem 1rem;
-  background-color: #ffca28;
+  background-color: #183ce0;
   border: none;
   color: black;
   font-size: 1rem;
   cursor: pointer;
 
   &:hover {
-    background-color: #f4b400;
+    background-color: #183ce0;
     }
 }
   
 .result-calculator {
   padding: 1rem;
-  background: #ffca28;
+  background: #183ce0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -124,7 +124,7 @@
   .history-logs thead tr {
     position: sticky;
     top: 0;
-    background-color: #ffca28;
+    background-color: #183ce0;
     border-color: black;
     z-index: 1;
 }
@@ -140,7 +140,7 @@
 }
   
 .view-all a:hover, .back-calc a:hover {
-  color: #ffca28;
+  color: #183ce0;
 }
 
 .back-calc {

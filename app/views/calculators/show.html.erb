@@ -1,7 +1,7 @@
 <div class="calculator">
   <div class="left">
     <h1 class="calculator-title">BMI and Body Fat Calculator</h1>
-    <%= form_with model: @calculator, url: calculator_calculate_path, method: :post, local: true, data: { turbo: false } do |f| %>
+    <%= form_with model: @calculator, url: calculate_user_calculator_path(current_user), method: :post, local: true, data: { turbo: false } do |f| %>
       <div class="form-field">
         <%= f.label :date %>
         <%= f.date_field :date %>
@@ -98,7 +98,7 @@
       </table>
 
       <div class="view-all">
-        <%= link_to "View All", calculator_history_path %>
+        <%= link_to "View All", history_user_calculator_path(current_user) %>
       </div>
     </div>
   </div>

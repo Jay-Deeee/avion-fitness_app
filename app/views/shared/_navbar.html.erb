@@ -3,18 +3,20 @@
     <a class="navbar-brand h1" href="/">Avion Fitness App</a>
   </div>
   <ul class="nav justify-content-center">
-    <li class="nav-item ">
-      <a class="nav-link " href="/">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="/calculator">Calculator</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/workouts">Workouts</a>
-    </li>
-        <li class="nav-item">
-      <a class="nav-link" href="/macros">Macros</a>
-    </li>
+      <li class="nav-item ">
+        <a class="nav-link " href="/">Dashboard</a>
+      </li>
+      <% if current_user %>
+      <li class="nav-item">
+        <%= link_to "Calculator", user_calculator_path(current_user), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/workouts">Workouts</a>
+      </li>
+          <li class="nav-item">
+        <a class="nav-link" href="/macros">Macros</a>
+      </li>
+    <% end %>
   </ul>
   <ul class="nav justify-content-end">
     <% if current_user %>

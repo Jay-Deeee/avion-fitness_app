@@ -6,21 +6,21 @@
         type="text"
         id="macro-date"
         placeholder="Pick a date"
-        data-selected-date="<%= params[:date] %>"
-        data-url-param="date"
+        data-selected-date="<%= params[:logged_date] %>"
+        data-url-param="logged_date"
         style="display: none;"
       />
     </div>
   </div>
  
   <div id="macro-section" style="margin-top: 2rem;">
-    <% if params[:date].present? %>
-      <h3><%= Date.parse(params[:date]).strftime("%B %d, %Y") %></h3>
+   <% if @logged_date %>
+      <h3><%= @logged_date.strftime("%B %d, %Y") %></h3>
       <br>
 
       <% if @target_macro %>
         <h4>Target Macros</h4> 
-        <%= link_to "Edit Target", edit_macro_path(@target_macro) %>
+        <%= link_to "Edit Target", edit_macro_path(id: @target_macro) %>
         <ul>
           <li>Calories: <%= @target_macro.calories %> kcal</li>
           <li>Protein: <%= @target_macro.protein %>g</li>
@@ -28,13 +28,13 @@
           <li>Fats: <%= @target_macro.fats %>g</li>
         </ul>
       <% else %>
-        <p>No target set yet. <%= link_to "Set Target", new_macro_path %></p>
+        <p>No target set yet. <%= link_to "Set Target", new_macro_path(logged_date: @logged_date) %></p>
       <% end %>
 
     <h4>Meals</h4>
     <div class="meal-buttons">
       <% ["breakfast", "lunch", "dinner", "snacks"].each do |meal_type| %>
-        <%= link_to "#{meal_type.capitalize}", macro_macros_path(meal: meal_type, date: params[:date]), class: "btn btn-outline-primary m-2" %>
+        <%= link_to "#{meal_type.capitalize}", macro_macros_path(meal: meal_type, date: params[:date], logged_date: @logged_date, user_id: current_user.id), class: "btn btn-outline-primary m-2" %>
       <% end %>
 
       <h5>Total for this day:</h5>

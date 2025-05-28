@@ -1,6 +1,9 @@
 <h1>Set Your Target Macros</h1>
 
 <%= form_with model: @macro, url: macros_path do |f| %>
+<%= f.hidden_field :logged_date, value: @logged_date %>
+<%= f.hidden_field :target, value: true %>
+ 
   <div>
     <%= f.label :calories %>
     <%= f.number_field :calories, step: 1 %>
@@ -19,3 +22,4 @@
   </div>
   <%= f.submit "Save Target" %>
 <% end %>
+

@@ -21,10 +21,9 @@
 
 <!-- Logged Meals for this Meal Type -->
 <h5>Logged <%= params[:meal]&.capitalize %></h5>
-<% meal_macros = (@logged_meals || []) %>
-<% if meal_macros.any? %>
+<% if @logged_meals.any? %>
   <ul>
-    <% meal_macros.each do |macro| %>
+    <% @logged_meals.each do |macro| %>
       <li>
         <strong><%= macro.name %></strong><br>
         Calories: <%= macro.calories %>, 
@@ -46,6 +45,7 @@
 <h5>Log Custom Meal</h5>
 <%= form_with url: log_macros_path, method: :post, local: true do |f| %>
   <%= hidden_field_tag :date, params[:date] %>
+  <%= f.hidden_field :logged_date, value: @logged_date %>
   <%= f.text_field :name, placeholder: "Food Name", required: true %>
   <%= f.number_field :calories, placeholder: "Calories", required: true %>
   <%= f.number_field :protein, placeholder: "Protein (g)", required: true, step: 0.1 %>

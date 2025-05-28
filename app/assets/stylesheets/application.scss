@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "navbar";
 @import "workouts/index";
 @import "workouts/show";
 @import "macros/index";
 @import "calculators";
 @import "dashboard";
+@import "devise";
 
 body {
   height: 100vh;
@@ -13,6 +16,13 @@ body {
     rgba(164, 201, 215, 1) 23%,
     rgba(234, 242, 244, 1) 65%
   );
+  --bs-gutter-x: 0;
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  padding: 1rem;
 }
 
 .color-red {

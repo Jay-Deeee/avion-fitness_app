@@ -25,9 +25,9 @@ def body_fat_range(gender)
     when 0...6
       "Essential fat (very low)"
     when 6...14
-      "Athletes"
+      "Athlete"
     when 14...18
-      "Fitness"
+      "Fit"
     when 18...25
       "Average"
     else
@@ -38,9 +38,9 @@ def body_fat_range(gender)
     when 0...14
       "Essential fat (very low)"
     when 14...21
-      "Athletes"
+      "Athlete"
     when 21...25
-      "Fitness"
+      "Fit"
     when 25...32
       "Average"
     else

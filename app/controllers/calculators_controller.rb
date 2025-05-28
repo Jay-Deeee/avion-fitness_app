@@ -2,11 +2,7 @@ class CalculatorsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    if params[:id]
-      @calculator = Calculator.find_by(id: params[:id])
-    else
-      @calculator = Calculator.new
-    end
+    @calculator = Calculator.new
   end
 
   def calculate

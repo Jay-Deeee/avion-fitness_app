@@ -7,9 +7,15 @@ Rails.application.routes.draw do
   root "pages#dashboard"
 
   devise_for :users
-  get "calculator", to: "calculators#show", as: :calculator
-  post "calculator/calculate", to: "calculators#calculate", as: :calculator_calculate
-  get "calculator/history", to: "calculators#index", as: :calculator_history
+
+  resources :users do
+    resource :calculator, only: [ :show ] do
+      collection do
+        post :calculate
+        get :history, to: "calculators#index"
+      end
+    end
+  end
 
   resources :workouts do
     resources :exercises, only: [ :new, :create, :destroy ] do
@@ -35,12 +41,12 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
-  
+
   patch "/users/:id/update_rest_time", to: "users#update_rest_time"
 
   resources :macros do
     collection do
-      get :meal, to: "macros#show", as: :macro  
+      get :meal, to: "macros#show", as: :macro
       get :search
       post :log
       post :add_macros

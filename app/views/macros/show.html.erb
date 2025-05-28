@@ -1,0 +1,57 @@
+<h3><%= params[:meal]&.capitalize || "Meal" %> on <%= Date.parse(params[:date]).strftime("%B %d, %Y") if params[:date].present? %></h3>
+<br>
+
+<%# <h2>Search Results</h2> %>
+<%= form_with url: search_macros_path, method: :get, local: true do |form| %>
+  <%= form.label :query, "Search for food:" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+<% end %>
+
+<% if @results.present? %>
+  <ul>
+    <% @results.each do |food| %>
+      <li><strong><%= food["food_name"] %></strong> - <%= food["food_description"] %></li>
+    <% end %>
+  </ul>
+<% elsif params[:query].present? %>
+  <p>No results found for "<%= params[:query] %>".</p>
+<% end %>
+<br>
+
+<!-- Logged Meals for this Meal Type -->
+<h5>Logged <%= params[:meal]&.capitalize %></h5>
+<% meal_macros = (@logged_meals || []) %>
+<% if meal_macros.any? %>
+  <ul>
+    <% meal_macros.each do |macro| %>
+      <li>
+        <strong><%= macro.name %></strong><br>
+        Calories: <%= macro.calories %>, 
+        Protein: <%= macro.protein %>g, 
+        Carbs: <%= macro.carbohydrates %>g, 
+        Fats: <%= macro.fats %>g
+        (<%= macro.meal&.capitalize %>)
+        <%= link_to "Delete", macro_path(macro, date: params[:date]), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No meals logged yet.</p>
+<% end %>
+<br>
+<br>
+
+<!-- Quick Log Form -->
+<h5>Log Custom Meal</h5>
+<%= form_with url: log_macros_path, method: :post, local: true do |f| %>
+  <%= hidden_field_tag :date, params[:date] %>
+  <%= f.text_field :name, placeholder: "Food Name", required: true %>
+  <%= f.number_field :calories, placeholder: "Calories", required: true %>
+  <%= f.number_field :protein, placeholder: "Protein (g)", required: true, step: 0.1 %>
+  <%= f.number_field :carbohydrates, placeholder: "Carbs (g)", required: true, step: 0.1 %>
+  <%= f.number_field :fats, placeholder: "Fats (g)", required: true, step: 0.1 %>
+  <%= f.hidden_field :meal, value: params[:meal] %>
+  <%= f.select :meal, options_for_select(['Breakfast', 'Lunch', 'Dinner', 'Snacks']), include_blank: "Select Meal Type" %>
+  <%= f.submit "Log Meal", class: "btn btn-success btn-sm" %>
+<% end %>

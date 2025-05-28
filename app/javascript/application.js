@@ -4,3 +4,4 @@ import "./timer"
 import "flatpickr"
 import "./flatpickr_controller"
 import "./exercise_type_controller"
+

@@ -35,14 +35,17 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
-
+  
   patch "/users/:id/update_rest_time", to: "users#update_rest_time"
 
-  resources :macros, only: [:index, :new, :create, :edit, :update, :destroy] do
+  resources :macros do
     collection do
+      get :meal, to: "macros#show", as: :macro  
       get :search
       post :log
+      post :add_macros
     end
+
     member do
       get :edit
       patch :update

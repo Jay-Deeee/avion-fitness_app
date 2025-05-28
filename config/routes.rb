@@ -12,7 +12,22 @@ Rails.application.routes.draw do
   get "calculator/history", to: "calculators#index", as: :calculator_history
 
   resources :workouts do
-    resources :exercises, except: [ :index, :show ]
+    resources :exercises, only: [ :new, :create, :destroy ] do
+      member do
+        patch :move_up
+        patch :move_down
+      end
+      resources :exercise_sets, except: [ :index, :show ] do
+        patch :move_up
+        patch :move_down
+      end
+    end
+  end
+
+  resources :exercise_sets, only: [] do
+    member do
+      patch :toggle_completed
+    end
   end
 
   resources :exercise_types, except: :show do
@@ -20,6 +35,8 @@ Rails.application.routes.draw do
       get :by_category
     end
   end
+  
+  patch "/users/:id/update_rest_time", to: "users#update_rest_time"
 
   resources :macros do
     collection do

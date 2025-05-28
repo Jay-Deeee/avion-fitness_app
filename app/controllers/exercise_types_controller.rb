@@ -41,9 +41,9 @@ class ExerciseTypesController < ApplicationController
   end
 
   def by_category
-    @exercise_types = ExerciseType.where(category: params[:category])
+    @exercise_types = ExerciseType.where(category: params[:category]).order(:name)
     render json: @exercise_types.select(:id, :name)
-  end  
+  end
 
   private
 

@@ -1,2 +1,11 @@
-<h1>Workouts#edit</h1>
-<p>Find me in app/views/workouts/edit.html.erb</p>
+<%= form_with model: @workout, local: true do |f| %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+    <% @workout.errors.full_messages_for(:name).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <%= f.submit "Save Workout" %>
+<% end %>

@@ -1,22 +1,65 @@
 <%= render "shared/timer" %>
 
-<div>
-  <h3><%= @workout.name %></h3>
-
-  <% if @workout.exercises.any? %>
-    <% @workout.exercises.each do |exercise| %>
-      <div>
-        <h5><%= exercise.exercise_type.name %></h5>
-        <ul>
-          <li>Sets: <%= exercise.sets %></li>
-          <li>Weight: <%= exercise.weight %> lbs</li>
-        </ul>
-      </div>
-    <% end %>
-  <% else %>
-    <br />
-    <em>Workout log empty</em>
+<h3> <%= @workout.performed_on.strftime("%B %d, %Y") %> </h3>
+<div class="exercise-title">
+  <h5><strong><%= @workout.name %></strong></h5>
+  <%= link_to edit_workout_path(@workout) do %>
+    <i class="fa-solid fa-pen"></i>
   <% end %>
 </div>
 
-<%= link_to "Back", workouts_path %>
+<% @exercises.each do |exercise| %>
+  <div class="exercise">
+    <h5><%= exercise.exercise_type.name %></h5>
+
+    <% if exercise.exercise_sets.any? %>
+      <ul>
+        <% exercise.exercise_sets.each do |set| %>
+          <li>
+            <ul class="set-container">
+              <li>
+                <div class="up-down-container">
+                  <%= link_to workout_exercise_exercise_set_move_up_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
+                    <i class="fa-regular fa-square-caret-up"></i>
+                  <% end unless set == exercise.exercise_sets.first %>
+
+                  <%= link_to workout_exercise_exercise_set_move_down_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %> 
+                    <i class="fa-regular fa-square-caret-down"></i>
+                  <% end unless set == exercise.exercise_sets.last %>
+                </div>
+              </li>
+              <li>
+                <%= link_to edit_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: set), class: "btn btn-sm" do %>
+                  <i class="fa-solid fa-pen"></i>
+                <% end %>
+              </li>
+              <li><%= set.position %></li>
+              <li><%= set.display_value %></li>
+              <li>
+                <% if set.weight.present? %> 
+                  <%= set.weight %> kg 
+                <% else %>
+                  0.0 kg
+                <% end %>
+              </li>
+              <li>
+                <%= check_box_tag "completed", set.id, set.completed, class: "complete-checkbox", data: { controller: "set-complete", set_complete_target: "checkbox", action: "set-complete#toggle", set_id: set.id } %>
+              </li>
+              <li>
+                <%= link_to workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: set), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
+                  <i class="fa-solid fa-xmark"></i>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><em>No sets recorded yet.</em></p>
+    <% end %>
+
+    <%= link_to 'Add Set', new_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+  </div>
+<% end %>
+
+<%= link_to "Back", workouts_path(performed_on: @workout.performed_on) %>

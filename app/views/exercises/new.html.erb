@@ -11,25 +11,27 @@
       <%= f.label :exercise_type_id, "Exercise Type" %>
       <%= f.collection_select :exercise_type_id, [], :id, :name, prompt: "Select Exercise Type" %>
     </div>
+
     <br>
-    Or create new:
-    <%= text_field_tag :new_exercise_type_name, nil, placeholder: "New type name" %>
-  </div>
 
-  <div>
-    <%= f.label :sets %>
-    <%= f.number_field :sets, min: 1 %>
-  </div>
+    <h3>Or create a new exercise type:</h3>
+    <div>
+      <%= label_tag :new_exercise_type_name, "Name" %><br>
+      <%= text_field_tag :new_exercise_type_name, nil, placeholder: "New exercise type name" %>
+    </div>
 
-  <div>
-    <%= f.label :value, "Reps / Time" %>
-    <%= f.number_field :value, min: 1 %>
-  </div>
+    <div>
+      <%= label_tag :exercise_type_category, "Category" %><br>
+      <%= select_tag :exercise_type_category, options_for_select(ExerciseType.categories.keys.map { |c| [c.titleize, c] }), prompt: "Select Category" %>
+    </div>
 
-  <div>
-    <%= f.label :weight, "Weight (optional)" %>
-    <%= f.number_field :weight, step: 0.1 %>
+    <div>
+      <%= label_tag :new_exercise_type_unit, "Unit" %><br>
+      <%= select_tag :new_exercise_type_unit, options_for_select([["Reps", "reps"], ["Seconds", "seconds"]]), prompt: "Select Unit" %>
+    </div>
   </div>
 
   <%= f.submit "Save Exercise" %>
 <% end %>
+
+<%= link_to "Back", workouts_path(performed_on: @workout.performed_on) %>

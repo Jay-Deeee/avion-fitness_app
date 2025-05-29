@@ -28,7 +28,7 @@
 
 <hr>
 
-<%= link_to "Delete Macro", macro_path(@macro), method: :delete, data: { confirm: "Are you sure you want to delete this macro?" }, class: "delete-button" %>
+<%= link_to "Delete Macro", macro_path(@macro), data:  {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this macro?" }, class: "delete-button" %>
 
 <br>
 

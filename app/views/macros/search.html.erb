@@ -12,13 +12,25 @@
   <ul>
     <% @results.each do |food| %>
       <li><strong><%= food["food_name"] %></strong> - <%= food["food_description"] %></li>
+      <% @food_name = food["food_name"]
+          description = food["food_description"]
+
+          @calories = description[/Calories:\s([\d.]+)kcal/, 1].to_f
+          @protein = description[/Protein:\s([\d.]+)g/, 1].to_f
+          @carbohydrates = description[/Carbs:\s([\d.]+)g/, 1].to_f
+          @fats = description[/Fat:\s([\d.]+)g/, 1].to_f 
+      %>
+
       <%= button_to "✚", add_macros_macros_path, method: :post, 
         params: {macro: {
-          calories: 25, 
-          protein: 25,
-          carbohydrates: 25,
-          fats: 25,
-          user_id: 3
+          user_id: @user_id,
+          name: @food_name,
+          calories: @calories, 
+          protein: @protein,
+          carbohydrates: @carbohydrates,
+          fats: @fats,
+          meal: @meal_type,
+          logged_date: @logged_date,
         } }%>
     <% end %>
   </ul>

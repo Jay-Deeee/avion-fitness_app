@@ -27,18 +27,3 @@ class ExerciseType < ApplicationRecord
     self.name = name.strip.titleize
   end
 end
-
-# Exercise.create!(
-#   workout_id: 1,
-#   exercise_type_id: 1,
-#   sets: 4,
-#   value: 8,
-#   unit: :reps
-# ) 
-#
-# ExerciseType.category_biceps
-# 
-# exercise_type.category_chest?
-# exercise_type.category_core? 
-# 
-# <%= form.select :category, ExerciseType.categories.keys.map { |c| [c.titleize, c] } %>

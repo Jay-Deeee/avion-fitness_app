@@ -3,9 +3,23 @@
 <h3> <%= @workout.performed_on.strftime("%B %d, %Y") %> </h3>
 <div class="exercise-title">
   <h5><strong><%= @workout.name %></strong></h5>
-  <%= link_to edit_workout_path(@workout) do %>
-    <i class="fa-solid fa-pen"></i>
-  <% end %>
+  <div data-controller="modal">
+    <button type="button"
+            class="btn btn-sm"
+            data-action="click->modal#open">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+
+    <div data-modal-target="modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Edit Workout</h3>
+        <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+
+        <%= render "edit", workout: @workout %>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <% @exercises.each do |exercise| %>
@@ -29,9 +43,23 @@
                 </div>
               </li>
               <li>
-                <%= link_to edit_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: set), class: "btn btn-sm" do %>
-                  <i class="fa-solid fa-pen"></i>
-                <% end %>
+                <div data-controller="modal">
+                  <button type="button"
+                          class="btn btn-sm"
+                          data-action="click->modal#open">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+
+                  <div data-modal-target="modal" class="modal hidden">
+                    <div class="modal-content">
+                      <h3>Edit Set</h3>
+                      <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+
+                      <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: set %>
+
+                    </div>
+                  </div>
+                </div>
               </li>
               <li><%= set.position %></li>
               <li><%= set.display_value %></li>
@@ -58,7 +86,23 @@
       <p><em>No sets recorded yet.</em></p>
     <% end %>
 
-    <%= link_to 'Add Set', new_workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise), class: "btn btn-sm" %>
+    <div data-controller="modal">
+      <button type="button"
+              class="btn btn-sm"
+              data-action="click->modal#open">
+        Add Set
+      </button>
+
+      <div data-modal-target="modal" class="modal hidden">
+        <div class="modal-content">
+          <h3>New Set for <%= exercise.exercise_type.name %></h3>
+          <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+
+          <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: ExerciseSet.new(exercise: exercise) %>
+
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
 

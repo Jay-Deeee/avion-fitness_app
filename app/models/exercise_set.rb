@@ -64,22 +64,3 @@ class ExerciseSet < ApplicationRecord
     end
   end
 end
-
-# all this changes since making a separate set model. Please change accordingly.
-
-# exercise = Exercise.new(value: 90)
-# exercise.exercise_type = ExerciseType.new(unit: :seconds)
-
-# exercise.display_value                    => "1m 30s"
-# exercise.display_value(format: :short)    => "1:30"
-
-# For a rep-based exercise
-# exercise = Exercise.new(value: 12)
-# exercise.exercise_type = ExerciseType.new(unit: :reps)
-
-# exercise.display_value                    => "12 reps"
-# 
-#
-# <p><strong>Sets:</strong> <%= exercise.sets %></p>
-# <p><strong>Each Set:</strong> <%= exercise.display_value %></p>
-

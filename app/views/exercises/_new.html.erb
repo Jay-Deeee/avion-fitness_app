@@ -1,6 +1,4 @@
-<h2>Add Exercise to <%= @workout.name %></h2>
-
-<%= form_with model: [@workout, @exercise] do |f| %>
+<%= form_with model: [workout, exercise] do |f| %>
   <div>
     <div>
       <%= f.label :category, "Category" %>

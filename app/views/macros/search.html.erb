@@ -35,7 +35,7 @@
     <% end %>
   </ul>
 <% elsif params[:query].present? %>
-  <p>No results found for "<%= params[:query] %>".</p>
+  <p>No results found for "<%= params[:query] %>". FatSecret API temporarily unavailable — please enter meals manually.</p>
 <% end %>
 
 <%= link_to "Back", macros_path(logged_date: @logged_date) %>

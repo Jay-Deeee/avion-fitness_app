@@ -32,7 +32,11 @@ class MacrosController < ApplicationController
   end
 
   def edit
-    @macro = current_user.macros.find(params[:id])
+    begin
+      @macro = current_user.macros.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to macros_path, alert: "Macro no longer exists."
+    end
   end
 
   def update
@@ -122,7 +126,7 @@ class MacrosController < ApplicationController
   def destroy
     @macro = current_user.macros.find(params[:id])
     @macro.destroy
-    redirect_to macros_path(logged_date: @macro.logged_date), notice: "Macro was successfully deleted."
+    redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), notice: "Macro was successfully deleted."
   end
 
   private

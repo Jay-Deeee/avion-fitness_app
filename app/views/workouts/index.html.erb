@@ -68,7 +68,23 @@
           <% end %>
         </div>
 
-        <%= link_to "Add Exercise", new_workout_exercise_path(@workout), class: "btn btn-primary" %>
+        <div data-controller="modal">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-action="click->modal#open">
+            Add Exercise
+          </button>
+
+          <div data-modal-target="modal" class="modal hidden">
+            <div class="modal-content">
+              <h2>Add Exercise to <%= @workout.name %></h2>
+              <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+
+              <%= render "exercises/new", workout: @workout, exercise: @exercise %>
+
+            </div>
+          </div>
+        </div>
       <% else %>
         <h5><em>No workout on this day.</em></h5>
         <%= form_with url: workouts_path, method: :post, scope: :workout, local: true do |f| %>

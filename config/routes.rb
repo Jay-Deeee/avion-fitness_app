@@ -46,10 +46,10 @@ Rails.application.routes.draw do
 
   resources :macros do
     collection do
-      get :meal, to: "macros#show", as: :macro
       get :search
-      post :log
-      post :add_macros
+      post :log_meal
+      post :add_meal
+      get :meal_view, to: "macros#show"
     end
 
     member do

@@ -10,7 +10,8 @@ class Macro < ApplicationRecord
   # Scope to get today's logged (non-target) macros
   # scope :today===, -> { where(created_at: Time.zone.today.all_day) }
   # scope :logged, -> { where(target: false) }
-  scope :target, -> { where(target: true) }
+  scope :target_macros, -> { where(target: true) }
+  scope :logged, -> { where(target: false) }
 
   # Optional: total macros calculation for a given user
   def self.totals
@@ -23,8 +24,8 @@ class Macro < ApplicationRecord
   end
 
   private
-  
+
   def downcase_meal
-    self.meal = meal.downcase if meal.present?
+    self.meal = meal&.downcase
   end
 end

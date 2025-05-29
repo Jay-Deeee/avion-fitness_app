@@ -21,7 +21,7 @@
           @fats = description[/Fat:\s([\d.]+)g/, 1].to_f 
       %>
 
-      <%= button_to "✚", add_macros_macros_path, method: :post, 
+      <%= button_to "✚", add_meal_macros_path, method: :post, 
         params: {macro: {
           user_id: @user_id,
           name: @food_name,
@@ -37,6 +37,8 @@
 <% elsif params[:query].present? %>
   <p>No results found for "<%= params[:query] %>".</p>
 <% end %>
+
+<%= link_to "Back", macros_path(logged_date: @logged_date) %>
 <br>
 <br>
 

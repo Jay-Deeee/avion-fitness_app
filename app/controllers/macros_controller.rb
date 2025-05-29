@@ -5,14 +5,10 @@ class MacrosController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    selected_date = params[:date].present? ? Date.parse(params[:date]) : Date.current
-    @macros = current_user.macros.where(created_at: selected_date.all_day, target: false)
-    # @macros = current_user.macros.where(logged_date: selected_date, target: false)
-    # @target_macro = current_user.macros.find_by(created_at: selected_date.all_day, target: true)
-    # @target_macro = current_user.macros.find_by(logged_date: selected_date, target: true)
-    @logged_date = Date.parse(params[:logged_date]) rescue nil
-    # @macros = current_user.macros.where(logged_date: @selected_date)
-    @target_macro = current_user.macros.find_by(logged_date: @logged_date)
+    @logged_date = params[:logged_date].present? ? Date.parse(params[:logged_date]) : Date.current
+    @macros = current_user.macros.where(logged_date: @logged_date, target: false)
+    @target_macro = current_user.macros.find_by(logged_date: @logged_date, target: true)
+
     @totals = {
       calories: @macros.sum(:calories),
       protein: @macros.sum(:protein),
@@ -21,17 +17,18 @@ class MacrosController < ApplicationController
     }
   end
 
+
   def new
     @logged_date = params[:logged_date] ? Date.parse(params[:logged_date]) : Date.current
     @macro = current_user.macros.new(logged_date: @logged_date)
-    
+
   end
 
   def create
     # current_user.macros.where(target: true).destroy_all
     @macro = current_user.macros.new(macro_params)
     if @macro.save
-      redirect_to macros_path, notice: "Target macros set!"
+      redirect_to macros_path(logged_date: @macro.logged_date.to_date), notice: "Target macros set!"
     else
       render :new
     end
@@ -45,7 +42,7 @@ class MacrosController < ApplicationController
     @macro = current_user.macros.find(params[:id])
 
     if @macro.update(macro_params)
-      redirect_to macros_path(date: @macro.created_at.to_date), notice: "Macro updated successfully!"
+      redirect_to macros_path(logged_date: @macro.logged_date.to_date), notice: "Macro updated successfully!"
     else
       render :edit
     end
@@ -112,7 +109,12 @@ class MacrosController < ApplicationController
     end
   end
 
-  def log
+  def log_meal
+    @meal_type = params[:meal] || params.dig(:macro, :meal)
+    @user_id = params[:user_id] || current_user.id
+    @logged_date = (params[:logged_date] || params.dig(:macro, :logged_date))&.to_date || Date.current
+
+
     if params[:food_id].present?
       # Logging via FatSecret
       response = HTTParty.get("https://platform.fatsecret.com/rest/server.api", {
@@ -137,11 +139,11 @@ class MacrosController < ApplicationController
         carbohydrates: serving["carbohydrate"].to_f,
         fats: serving["fat"].to_f,
         target: false,
-        meal: params[:meal],
-        created_at: Date.parse(params[:date]) || Date.current
-        }
-      else
-   # Manual meal log (form)
+        meal: @meal_type,
+        logged_date: @logged_date
+      }
+    else
+      # Manual log
       macro_data = {
         name: params[:name],
         calories: params[:calories],
@@ -149,33 +151,34 @@ class MacrosController < ApplicationController
         carbohydrates: params[:carbohydrates],
         fats: params[:fats],
         target: false,
-        meal: params[:meal],
-        # created_at: Date.parse(params[:date]) || Date.current,
-        created_at: Time.current,
-        logged_date: params[:logged_date]
-        }
-      end
+        meal: @meal_type,
+        logged_date: @logged_date
+      }
+    end
+
     current_user.macros.create!(macro_data)
-    redirect_to search_macros_path(meal: macro_data[:meal], date: params[:date]), notice: "Meal logged!"
+
+    redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type, user_id: @user_id), notice: "Meal logged!"
   end
 
-  def add_macros
+
+  def add_meal
     # @macros = Macro.new(macro_params)
     # @macros.user_id = current_user.id
     @macros = current_user.macros.new(macro_params.merge(target: false))
     if @macros.save
       flash[:alert] = "Added Successfully!"
-    else 
+    else
       flash[:alert] = "Adding Unsucessfull."
     end
   end
-  
+
   def destroy
     @macro = current_user.macros.find(params[:id])
     @macro.destroy
     redirect_to macros_path, notice: "Macro was successfully deleted."
   end
-  
+
   private
 
   def macro_params

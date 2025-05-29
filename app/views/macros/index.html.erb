@@ -19,8 +19,7 @@
       <br>
 
       <% if @target_macro %>
-        <h4>Target Macros</h4> 
-        <%= link_to "Edit Target", edit_macro_path(id: @target_macro) %>
+        <h4><%= link_to "Target Macros", edit_macro_path(id: @target_macro) %></h4> 
         <ul>
           <li>Calories: <%= @target_macro.calories %> kcal</li>
           <li>Protein: <%= @target_macro.protein %>g</li>
@@ -31,13 +30,12 @@
         <p>No target set yet. <%= link_to "Set Target", new_macro_path(logged_date: @logged_date) %></p>
       <% end %>
 
-    <h4>Meals</h4>
     <div class="meal-buttons">
       <% ["breakfast", "lunch", "dinner", "snacks"].each do |meal_type| %>
-        <%= link_to "#{meal_type.capitalize}", macro_macros_path(meal: meal_type, date: params[:date], logged_date: @logged_date, user_id: current_user.id), class: "btn btn-outline-primary m-2" %>
-      <% end %>
+        <%= link_to "#{meal_type.capitalize}", meal_view_macros_path(meal: meal_type, logged_date: @logged_date, user_id: current_user.id), class: "btn btn-outline-primary m-2" %>
+      <% end %> <br> <br>
 
-      <h5>Total for this day:</h5>
+      <h6>Total for this day:</h6>
       <ul>
         <li>Calories: <%= @totals[:calories] %></li>
         <li>Protein: <%= @totals[:protein] %>g</li>

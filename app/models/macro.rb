@@ -1,9 +1,11 @@
 class Macro < ApplicationRecord
   belongs_to :user
 
-  validates :calories, :protein, :carbohydrates, :fats, presence: true
-  validates :calories, numericality: { greater_than_or_equal_to: 0 }
-  validates :protein, :carbohydrates, :fats, numericality: true
+  validates :calories, :protein, :carbohydrates, :fats,
+    presence: { message: "must be provided" },
+    numericality: { message: "must be a number", greater_than: 0 }
+
+  validate :macros_must_be_greater_than_zero
 
   before_save :downcase_meal
 
@@ -24,6 +26,15 @@ class Macro < ApplicationRecord
   end
 
   private
+
+  def macros_must_be_greater_than_zero
+    [:calories, :protein, :carbohydrates, :fats].each do |attr|
+      value = send(attr)
+      if value.present? && value.to_f <= 0
+        errors.add(attr, "must be greater than zero")
+      end
+    end
+  end
 
   def downcase_meal
     self.meal = meal&.downcase

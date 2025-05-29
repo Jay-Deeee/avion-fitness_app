@@ -1,26 +1,43 @@
 <h1>Set Your Target Macros</h1>
 
 <%= form_with model: @macro, url: macros_path do |f| %>
-<%= f.hidden_field :logged_date, value: @logged_date %>
-<%= f.hidden_field :target, value: true %>
- 
-  <div>
+  <%= f.hidden_field :logged_date, value: @logged_date %>
+  <%= f.hidden_field :target, value: true %>
+
+  <div class="<%= 'field_with_errors' if @macro.errors[:calories].any? %>">
     <%= f.label :calories %>
     <%= f.number_field :calories, step: 1 %>
+    <% @macro.errors[:calories].each do |msg| %>
+      <div class="error-message"><%= msg %></div>
+    <% end %>
   </div>
-  <div>
+
+  <div class="<%= 'field_with_errors' if @macro.errors[:protein].any? %>">
     <%= f.label :protein %> (g)
     <%= f.number_field :protein, step: 0.1 %>
+    <% @macro.errors[:protein].each do |msg| %>
+      <div class="error-message"><%= msg %></div>
+    <% end %>
   </div>
-  <div>
+
+  <div class="<%= 'field_with_errors' if @macro.errors[:carbohydrates].any? %>">
     <%= f.label :carbohydrates %> (g)
     <%= f.number_field :carbohydrates, step: 0.1 %>
+    <% @macro.errors[:carbohydrates].each do |msg| %>
+      <div class="error-message"><%= msg %></div>
+    <% end %>
   </div>
-  <div>
+
+  <div class="<%= 'field_with_errors' if @macro.errors[:fats].any? %>">
     <%= f.label :fats %> (g)
     <%= f.number_field :fats, step: 0.1 %>
+    <% @macro.errors[:fats].each do |msg| %>
+      <div class="error-message"><%= msg %></div>
+    <% end %>
   </div>
+
   <%= f.submit "Save Target" %>
 <% end %>
+
 
 <%= link_to "Back", macros_path(logged_date: @logged_date) %>

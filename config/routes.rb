@@ -59,7 +59,6 @@ Rails.application.routes.draw do
     end
   end
 
-   #Catch all unmatched routes and direct them to ApplicationController#route_not_found
-match "*unmatched", to: "application#route_not_found", via: :all
+  #Catch all unmatched routes and direct them to ApplicationController#route_not_found
+  match "*unmatched", to: "application#route_not_found", via: :all
 end
-

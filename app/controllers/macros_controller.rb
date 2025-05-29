@@ -27,7 +27,8 @@ class MacrosController < ApplicationController
     if @macro.save
       redirect_to macros_path(logged_date: @macro.logged_date), notice: "Target macros set!"
     else
-      render :new
+      flash.now[:alert] = "Target macros set failed."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -44,7 +45,8 @@ class MacrosController < ApplicationController
     if @macro.update(macro_params)
       redirect_to macros_path(logged_date: @macro.logged_date), notice: "Macro updated successfully!"
     else
-      render :edit
+      flash.now[:alert] = "Update failed. Please fix the errors below."
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -109,10 +111,15 @@ class MacrosController < ApplicationController
       }
     end
 
-    current_user.macros.create!(macro_data)
+    macro = current_user.macros.new(macro_data)
 
-    redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), notice: "Meal logged!"
-  end
+      if macro.save
+        redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), notice: "Meal logged!"
+      else
+        Rails.logger.error("Failed to log meal: #{macro.errors.full_messages.join(', ')}")
+        redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), alert: "Failed to log meal: #{macro.errors.full_messages.join(', ')}"
+      end
+    end
 
   def add_meal
     @macros = current_user.macros.new(macro_params.merge(target: false))

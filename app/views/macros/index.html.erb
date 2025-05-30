@@ -1,4 +1,4 @@
-<section id="macro-container">
+<section id="macro-container" class="macro-container">
   <div id="macro-calendar">
     <div>
       <label for="macro-date">Select a date:</label> 
@@ -19,7 +19,7 @@
       <br>
 
       <% if @target_macro %>
-        <h4><%= link_to "Target Macros", edit_macro_path(id: @target_macro) %></h4> 
+        <h5><%= link_to "Target Macros", edit_macro_path(id: @target_macro) %></h5> 
         <ul>
           <li>Calories: <%= @target_macro.calories %> kcal</li>
           <li>Protein: <%= @target_macro.protein %>g</li>

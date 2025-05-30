@@ -11,6 +11,9 @@
 @import "dashboard";
 @import "devise";
 @import "macros/new";
+@import "macros/show";
+@import "macros/search";
+@import "macros/new";
 
 body {
   height: 100vh;

@@ -1,5 +1,5 @@
 <%= form_with model: [workout, exercise] do |f| %>
-  <div>
+  <div class="common-form">
     <div>
       <%= f.label :category, "Category" %>
       <%= select_tag :exercise_type_category, options_for_select(ExerciseType.categories.keys.map { |c| [c.titleize, c] }), prompt: "Select Category" %>
@@ -12,7 +12,7 @@
 
     <br>
 
-    <h3>Or create a new exercise type:</h3>
+    <h3 class="form-subtitle">Or create a new exercise type:</h3>
     <div>
       <%= label_tag :new_exercise_type_name, "Name" %><br>
       <%= text_field_tag :new_exercise_type_name, nil, placeholder: "New exercise type name" %>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <%= f.submit "Save Exercise" %>
-<% end %>
+  <br />
 
-<%= link_to "Back", workouts_path(performed_on: @workout.performed_on) %>
+  <%= f.submit "Save Exercise", class: "btn btn-success" %>
+<% end %>

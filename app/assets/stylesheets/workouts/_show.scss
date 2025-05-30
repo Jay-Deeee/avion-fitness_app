@@ -1,40 +1,55 @@
-.timer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.today-container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: calc(100% - 108px);
-  margin: 0;
-  padding: 0;
-
-  .exercise-title {
+.workout-container {
+  .timer-container {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
   }
-}
 
-.exercise {
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-
-    .set-container {
+  .workout-section {
+    .exercise-title {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 300px;
-      padding-left: 0;
+      gap: 10px;
+    }
+
+    .content-container {
+      .show-set-container {
+        ul {
+          list-style-type: none;
+        }
+
+        .set-container {
+          padding: 0;
+
+          .border-here {
+            border-bottom: 1px solid #00000050;
+            width: 280px;
+          }
+
+          .border-here:first-child {
+            border-top: 1px solid #00000050;
+          }
+
+          .workout-set {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 20px 50px 30px 1fr 1fr 30px;
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+
+      .show-add-button {
+        display: flex;
+        justify-content: center;
+        width: 280px;
+      }
     }
   }
 }
 
 .e-set-delete {
-  width: 80px;
+  width: 110px;
 }

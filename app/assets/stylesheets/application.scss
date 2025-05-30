@@ -2,6 +2,7 @@
 
 @import "shared/navbar";
 @import "shared/modal";
+@import "shared/form";
 @import "workouts/index";
 @import "workouts/show";
 @import "workouts/edit";
@@ -32,6 +33,10 @@ body {
   color: red;
 }
 
+.color-black {
+  color: #000000;
+}
+
 .black-50 {
   color: #00000050;
 }
@@ -48,4 +53,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.vert-button {
+  display: flex;
+  flex-direction: column;
 }

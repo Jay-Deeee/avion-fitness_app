@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div id="workout-section">
+  <div class="workout-section">
     <% if @selected_date %>
       <h4 class="workout-date-title"><%= @selected_date.strftime("%B %d, %Y") %></h4>
 
@@ -89,8 +89,10 @@
 
           <div data-modal-target="modal" class="modal hidden">
             <div class="modal-content">
-              <h2>Add Exercise to <%= @workout.name %></h2>
-              <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+              <div class="modal-title">
+                <h2>Add Exercise to <%= @workout.name %></h2>
+                <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+              </div>
 
               <%= render "exercises/new", workout: @workout, exercise: @exercise %>
 

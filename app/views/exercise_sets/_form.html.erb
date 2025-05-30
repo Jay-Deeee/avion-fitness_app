@@ -23,3 +23,7 @@
 
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
+
+<% if exercise_set.persisted? %>
+  <%= link_to "Delete", workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: exercise_set), data: { turbo_method: :delete }, class: "btn btn-danger e-set-delete" %>
+<% end %>

@@ -35,6 +35,14 @@ body {
   color: #00000050;
 }
 
+.justify-end {
+  justify-self: end;
+}
+
+.justify-center {
+  justify-self: center;
+}
+
 .up-down-container {
   display: flex;
   flex-direction: column;

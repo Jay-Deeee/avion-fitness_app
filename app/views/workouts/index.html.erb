@@ -1,71 +1,83 @@
-<section id="workout-container">
+<section id="workout-index" class="workout-container">
   <div id="workout-calendar">
-    <div>
+    <div class="calendar-container">
       <label for="workout-date">Select a date:</label>
-      <input
-        type="text"
-        id="workout-date"
-        placeholder="Pick a date"
-        data-selected-date="<%= params[:performed_on] %>"
-        data-url-param="performed_on"
-        style="display: none;"
-        />
+        <div>
+        <input
+          type="text"
+          id="workout-date"
+          placeholder="Pick a date"
+          data-selected-date="<%= params[:performed_on] %>"
+          data-url-param="performed_on"
+          style="display: none;"
+          />
+        </div>
     </div>
   </div>
 
-  <div id="workout-section" style="margin-top: 2rem;">
+  <div id="workout-section">
     <% if @selected_date %>
-      <h3><%= @selected_date.strftime("%B %d, %Y") %></h3>
+      <h4 class="workout-date-title"><%= @selected_date.strftime("%B %d, %Y") %></h4>
 
       <% if @workout %>
         <div>
-          <%= link_to "#{@workout.name}", workout_path(@workout) %>
+          <h4><%= link_to "#{@workout.name.upcase}", workout_path(@workout), class: "workout-title" %></h4>
+          
+          <div class="content-container">
+            <% if @workout.exercises.any? %>
+              <% @workout.exercises.each do |exercise| %>
+                <div class="exercise-container">
+                  <div class="up-down-container">
+                    <%= link_to move_up_workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
+                      <i class="fa-regular fa-square-caret-up"></i>
+                    <% end unless exercise == @workout.exercises.first %>
 
-          <% if @workout.exercises.any? %>
-            <% @workout.exercises.each do |exercise| %>
-              <div class="exercise-container">
-                <div class="up-down-container">
-                  <%= link_to move_up_workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
-                    <i class="fa-regular fa-square-caret-up"></i>
-                  <% end unless exercise == @workout.exercises.first %>
-
-                  <%= link_to move_down_workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
-                    <i class="fa-regular fa-square-caret-down"></i>
-                  <% end unless exercise == @workout.exercises.last %>
-                </div>
-
-                <div>
-                  <div class="exercise-name-container">
-                    <h5><%= exercise.exercise_type.name %></h5>
-
-                    <%= link_to workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
-                      <i class="fa-solid fa-xmark"></i>
-                    <% end %>
+                    <%= link_to move_down_workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
+                      <i class="fa-regular fa-square-caret-down"></i>
+                    <% end unless exercise == @workout.exercises.last %>
                   </div>
 
                   <div>
-                    <% if exercise.exercise_sets.any? %>
-                      <ul>
-                        <% exercise.exercise_sets.each do |set| %>
-                          <li>
-                            Set <%= set.position %>: 
-                            <%= set.display_value %> 
-                            <% if set.weight.present? %> @ <%= set.weight %> kg <% end %>
-                            <% if set.completed %> ✅ <% end %>
-                          </li>
-                        <% end %>
-                      </ul>
-                    <% else %>
-                      <p><em>No sets recorded yet.</em></p>
-                    <% end %>
+                    <div class="exercise-name-container">
+                      <h5><%= exercise.exercise_type.name %></h5>
+
+                      <%= link_to workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
+                        <i class="fa-solid fa-xmark"></i>
+                      <% end %>
+                    </div>
+
+                    <div>
+                      <% if exercise.exercise_sets.any? %>
+                        <ul class="workout-set-container">
+                          <% exercise.exercise_sets.each do |set| %>
+                            <li>Set <%= set.position %>:</li>
+                            <li class="justify-end"><%= set.display_value %></li>
+                            <li class="justify-end">
+                              <% if set.weight.present? %> 
+                                <%= set.weight %> kg 
+                              <% else %>
+                                0.0 kg
+                              <% end %>
+                            </li>
+                            <li class="justify-center">
+                              <% if set.completed %>
+                                <i class="fa-regular fa-circle-check text-success"></i>
+                              <% end %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      <% else %>
+                        <p><em>No sets recorded yet.</em></p>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <% end %>
+            <% else %>
+              <br />
+              <em>Workout log empty</em>
             <% end %>
-          <% else %>
-            <br />
-            <em>Workout log empty</em>
-          <% end %>
+          </div>
         </div>
 
         <div data-controller="modal">

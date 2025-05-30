@@ -1,6 +1,5 @@
 class WorkoutsController < ApplicationController
   before_action :set_workout, only: [:show, :edit, :update, :destroy]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   
   def index
     if params[:performed_on].present?
@@ -55,9 +54,5 @@ class WorkoutsController < ApplicationController
 
   def workout_params
     params.require(:workout).permit(:name, :performed_on)
-  end
-
-  def record_not_found
-    redirect_to workouts_path, alert: "Record does not exist."
   end
 end

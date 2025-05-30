@@ -1,7 +1,6 @@
 class ExerciseSetsController < ApplicationController
   before_action :set_workout, :set_exercise, except: [:toggle_completed]
   before_action :set_exercise_set, only: [:edit, :update, :destroy]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
     @exercise_set = @exercise.exercise_sets.new
@@ -72,9 +71,5 @@ class ExerciseSetsController < ApplicationController
 
   def exercise_set_params
     params.require(:exercise_set).permit(:value, :weight)
-  end
-
-  def record_not_found
-    redirect_to workouts_path, alert: "Record does not exist."
   end
 end

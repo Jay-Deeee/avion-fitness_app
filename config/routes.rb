@@ -46,10 +46,10 @@ Rails.application.routes.draw do
 
   resources :macros do
     collection do
-      get :meal, to: "macros#show", as: :macro
       get :search
-      post :log
-      post :add_macros
+      post :log_meal
+      post :add_meal
+      get :meal_view, to: "macros#show"
     end
 
     member do
@@ -58,4 +58,7 @@ Rails.application.routes.draw do
       delete :destroy
     end
   end
+
+  #Catch all unmatched routes and direct them to ApplicationController#route_not_found
+  match "*unmatched", to: "application#route_not_found", via: :all
 end

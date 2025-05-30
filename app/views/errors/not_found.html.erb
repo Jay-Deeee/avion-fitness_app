@@ -1,0 +1,8 @@
+<h1>Oops! Page Not Found (404)</h1>
+<p>The page you are looking for doesn't exist or has been moved.</p>
+
+<% if request.referer.present? %>
+  <p><%= link_to "Go back", request.referer %></p>
+<% else %>
+  <p><%= link_to "Go back to Home", pages_dashboard_path %></p>
+<% end %>

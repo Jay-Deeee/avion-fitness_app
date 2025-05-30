@@ -66,7 +66,6 @@ class MacrosController < ApplicationController
 
     @logged_meals = current_user.macros
       .where(logged_date: @logged_date, meal: @meal_type, target: false)
-
     if @query.present?
       response = client.search_foods(@query)
       foods = response.dig("foods", "food")
@@ -113,20 +112,21 @@ class MacrosController < ApplicationController
 
     macro = current_user.macros.new(macro_data)
 
-      if macro.save
-        redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), notice: "Meal logged!"
-      else
-        Rails.logger.error("Failed to log meal: #{macro.errors.full_messages.join(', ')}")
-        redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), alert: "Failed to log meal: #{macro.errors.full_messages.join(', ')}"
-      end
+    if macro.save
+      redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), notice: "Meal logged!"
+    else
+      Rails.logger.error("Failed to log meal: #{macro.errors.full_messages.join(', ')}")
+      redirect_back fallback_location: meal_view_macros_path(logged_date: @logged_date, meal: @meal_type), alert: "Failed to log meal: #{macro.errors.full_messages.join(', ')}"
     end
+  end
 
   def add_meal
     @macros = current_user.macros.new(macro_params.merge(target: false))
     if @macros.save
-      flash[:alert] = "Added Successfully!"
+      redirect_to macros_path, notice: "Meal logged!"
     else
       flash[:alert] = "Adding Unsuccessful."
+      render :search, status: :unprocessable_entity
     end
   end
 

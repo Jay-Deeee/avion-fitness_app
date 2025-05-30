@@ -1,10 +1,10 @@
 <!-- Search Food -->
 <%# <h5>Search Food</h5> %>
 <%= form_with url: search_macros_path, method: :get, local: true do |form| %>
-  <%= hidden_field_tag :meal, params[:meal] %>
   <%= hidden_field_tag :date, params[:date] %>
   <%= form.label :query, "Search for food:" %>
   <%= form.text_field :query %>
+  <%= form.select :meal, options_for_select(['Breakfast', 'Lunch', 'Dinner', 'Snacks'], params[:meal]), include_blank: "Select Meal Type", required: true %>
   <%= form.submit "Search" %>
 <% end %>
 

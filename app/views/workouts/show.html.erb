@@ -1,109 +1,137 @@
-<%= render "shared/timer" %>
-
-<h3> <%= @workout.performed_on.strftime("%B %d, %Y") %> </h3>
-<div class="exercise-title">
-  <h5><strong><%= @workout.name %></strong></h5>
-  <div data-controller="modal">
-    <button type="button"
-            class="btn btn-sm"
-            data-action="click->modal#open">
-      <i class="fa-solid fa-pen"></i>
-    </button>
-
-    <div data-modal-target="modal" class="modal hidden">
-      <div class="modal-content">
-        <h3>Edit Workout</h3>
-        <button type="button" class="close-button" data-action="click->modal#close">✖</button>
-
-        <%= render "edit", workout: @workout %>
-
-      </div>
-    </div>
+<section id="workout-show" class="workout-container">
+  <div class="timer-container">
+    <%= render "shared/timer" %>
   </div>
-</div>
 
-<% @exercises.each do |exercise| %>
-  <div class="exercise">
-    <h5><%= exercise.exercise_type.name %></h5>
+  <div class="workout-section">
+    <h4 class="workout-date-title"><%= @workout.performed_on.strftime("%B %d, %Y") %></h4>
 
-    <% if exercise.exercise_sets.any? %>
-      <ul>
-        <% exercise.exercise_sets.each do |set| %>
-          <li>
-            <ul class="set-container">
-              <li>
-                <div class="up-down-container">
-                  <%= link_to workout_exercise_exercise_set_move_up_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
-                    <i class="fa-regular fa-square-caret-up"></i>
-                  <% end unless set == exercise.exercise_sets.first %>
+    <div>
+      <div class="exercise-title">
+        <h4><%= @workout.name.upcase %></h4>
 
-                  <%= link_to workout_exercise_exercise_set_move_down_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %> 
-                    <i class="fa-regular fa-square-caret-down"></i>
-                  <% end unless set == exercise.exercise_sets.last %>
-                </div>
-              </li>
-              <li>
-                <div data-controller="modal">
-                  <button type="button"
-                          class="btn btn-sm"
-                          data-action="click->modal#open">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
+        <div data-controller="modal">
+          <button type="button"
+                  class="btn btn-sm"
+                  data-action="click->modal#open">
+            <i class="fa-solid fa-pen"></i>
+          </button>
 
-                  <div data-modal-target="modal" class="modal hidden">
-                    <div class="modal-content">
-                      <h3>Edit Set</h3>
-                      <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+          <div data-modal-target="modal" class="modal hidden">
+            <div class="modal-content">
+              <div class="modal-title">
+                <h3>Edit Workout</h3>
+                <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+              </div>
 
-                      <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: set %>
+              <%= render "edit", workout: @workout %>
 
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li><%= set.position %></li>
-              <li><%= set.display_value %></li>
-              <li>
-                <% if set.weight.present? %> 
-                  <%= set.weight %> kg 
-                <% else %>
-                  0.0 kg
-                <% end %>
-              </li>
-              <li>
-                <%= check_box_tag "completed", set.id, set.completed, class: "complete-checkbox", data: { controller: "set-complete", set_complete_target: "checkbox", action: "set-complete#toggle", set_id: set.id } %>
-              </li>
-              <li>
-                <%= link_to workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: set), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
-                  <i class="fa-solid fa-xmark"></i>
-                <% end %>
-              </li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p><em>No sets recorded yet.</em></p>
-    <% end %>
-
-    <div data-controller="modal">
-      <button type="button"
-              class="btn btn-sm"
-              data-action="click->modal#open">
-        Add Set
-      </button>
-
-      <div data-modal-target="modal" class="modal hidden">
-        <div class="modal-content">
-          <h3>New Set for <%= exercise.exercise_type.name %></h3>
-          <button type="button" class="close-button" data-action="click->modal#close">✖</button>
-
-          <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: ExerciseSet.new(exercise: exercise) %>
-
+            </div>
+          </div>
         </div>
+
+      </div>
+
+      <div class="content-container">
+        <% @exercises.each do |exercise| %>
+          <div>
+            <div class="exercise-name-container">
+              <h5><%= exercise.exercise_type.name %></h5>
+
+              <%= link_to workout_exercise_path(workout_id: @workout, id: exercise), data: { turbo_method: :delete }, class: "btn btn-sm color-red" do %>
+                <i class="fa-solid fa-xmark"></i>
+              <% end %>
+            </div>
+
+            <div class="show-set-container">
+              <% if exercise.exercise_sets.any? %>
+                <ul class="set-container">
+                  <% exercise.exercise_sets.each do |set| %>
+                    <li class="border-here">
+                      <ul class="workout-set">
+                        <li>
+                          <div class="up-down-container">
+                            <%= link_to workout_exercise_exercise_set_move_up_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %>
+                              <i class="fa-regular fa-square-caret-up"></i>
+                            <% end unless set == exercise.exercise_sets.first %>
+
+                            <%= link_to workout_exercise_exercise_set_move_down_path(workout_id: @workout, exercise_id: exercise, exercise_set_id: set), data: { turbo_method: :patch }, class: "btn btn-sm black-50" do %> 
+                              <i class="fa-regular fa-square-caret-down"></i>
+                            <% end unless set == exercise.exercise_sets.last %>
+                          </div>
+                        </li>
+                        <li class="justify-center">
+                          <div data-controller="modal">
+                            <button type="button"
+                                    class="btn btn-sm"
+                                    style="text-align: center"
+                                    data-action="click->modal#open">
+                              <i class="fa-solid fa-pen"></i>
+                            </button>
+
+                            <div data-modal-target="modal" class="modal hidden">
+                              <div class="modal-content">
+                                <div class="modal-title">
+                                  <h3>Edit Set</h3>
+                                  <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+                                </div>
+
+                                <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: set %>
+
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="justify-center"><%= set.position %></li>
+                        <li class="justify-end">
+                          <%= set.display_value(format: :short) %>
+                        </li>
+                        <li class="justify-end">
+                          <% if set.weight.present? %> 
+                            <%= set.weight %> kg 
+                          <% else %>
+                            0.0 kg
+                          <% end %>
+                        </li>
+                        <li class="justify-center">
+                          <%= check_box_tag "completed", set.id, set.completed, class: "complete-checkbox", data: { controller: "set-complete", set_complete_target: "checkbox", action: "set-complete#toggle", set_id: set.id } %>
+                        </li>
+                      </ul>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p><em>No sets recorded yet.</em></p>
+              <% end %>
+            </div>
+            <div data-controller="modal" class="show-add-button">
+              <button type="button"
+                      class="btn btn-sm vert-button"
+                      data-action="click->modal#open">
+                <i class="fa-solid fa-plus"></i>Add Set
+              </button>
+
+              <div data-modal-target="modal" class="modal hidden">
+                <div class="modal-content">
+                  <div class="modal-title">
+                    <h3>New Set for <%= exercise.exercise_type.name %></h3>
+                    <button type="button" class="close-button" data-action="click->modal#close">✖</button>
+                  </div>
+
+                  <%= render "exercise_sets/form", workout: @workout, exercise: exercise, exercise_set: ExerciseSet.new(exercise: exercise) %>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
-  </div>
-<% end %>
 
-<%= link_to "Back", workouts_path(performed_on: @workout.performed_on) %>
+    <%= link_to workouts_path(performed_on: @workout.performed_on), class: "color-black" do %>
+      <span>
+        <i class="fa-solid fa-arrow-left"></i> Back to Workouts
+      </span>
+    <% end %>
+  </div>
+</section>

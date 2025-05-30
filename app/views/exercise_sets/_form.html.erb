@@ -10,16 +10,25 @@
     </div>
   <% end %>
 
-  <div>
-    <%= f.label :weight %>
-    <%= f.number_field :weight, step: 0.1 %>
-    <small>kg</small>
+  <div class="common-form">
+    <div>
+      <%= f.label :weight %>:
+      <%= f.number_field :weight, step: 0.1 %>
+      <small>kg</small>
+    </div>
+
+    <div>
+      <%= f.label :value, exercise_set.unit.capitalize %>:
+      <%= f.number_field :value %>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :value, exercise_set.unit.capitalize %>
-    <%= f.number_field :value %>
-  </div>
+  <br />
 
-  <%= f.submit class: "btn btn-primary" %>
+  <div class="form-buttons">
+    <%= f.submit "Update Set", class: "btn btn-success" %>
+    <% if exercise_set.persisted? %>
+      <%= link_to "Delete Set", workout_exercise_exercise_set_path(workout_id: @workout, exercise_id: exercise, id: exercise_set), data: { turbo_method: :delete }, class: "btn btn-danger e-set-delete" %>
+    <% end %>
+  </div>
 <% end %>

@@ -1,7 +1,6 @@
 class ExercisesController < ApplicationController
   before_action :set_workout
   before_action :set_exercise, only: [:destroy, :move_up, :move_down]
-  # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
     @exercise = @workout.exercises.new
@@ -39,7 +38,7 @@ class ExercisesController < ApplicationController
 
   def destroy
     @exercise.destroy
-    redirect_to workouts_path(performed_on: @workout.performed_on), notice: "Exercise was successfully deleted."
+    redirect_to request.referer || workouts_path(performed_on: @workout.performed_on), notice: "Exercise was successfully deleted."
   end
 
   def move_up
@@ -69,8 +68,4 @@ class ExercisesController < ApplicationController
   def load_exercise_types
     @exercise_types = ExerciseType.all.order(:name)
   end
-
-  # def record_not_found
-  #   redirect_to workouts_path, alert: "Record does not exist."
-  # end
 end

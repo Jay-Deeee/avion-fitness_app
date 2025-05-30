@@ -1,0 +1,14 @@
+.common-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-subtitle {
+  margin-bottom: -10px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 5px;
+}

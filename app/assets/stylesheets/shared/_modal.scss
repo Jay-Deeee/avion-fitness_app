@@ -12,12 +12,17 @@
 }
 
 .modal-content {
-  background: white;
+  background: #e8eae6;
   padding: 2rem;
-  border-radius: 5px;
+  border-radius: 20px;
   position: relative;
   max-width: 600px;
   width: 100%;
+}
+
+.modal-title {
+  display: flex;
+  justify-content: space-between;
 }
 
 .close-button {

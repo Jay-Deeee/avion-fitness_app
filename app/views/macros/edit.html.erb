@@ -1,43 +1,46 @@
-<h2>Current Macros</h2>
-<br>
-
-<% if @macro.errors.any? %>
-  <div id="error_explanation">
-    <h3><%= pluralize(@macro.errors.count, "error") %> prevented this macro from being updated:</h3>
-    <ul>
-      <% @macro.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_with model: @macro, url: macro_path(@macro), method: :patch, local: true do |f| %>
-  <div>
-    <%= f.label :calories %>
-    <%= f.number_field :calories, step: 0.01 %>
-  </div>
-
-  <div>
-    <%= f.label :protein %>
-    <%= f.number_field :protein, step: 0.01 %>
-  </div>
-
-  <div>
-    <%= f.label :carbohydrates %>
-    <%= f.number_field :carbohydrates, step: 0.01 %>
-  </div>
-
-  <div>
-    <%= f.label :fats %>
-    <%= f.number_field :fats, step: 0.01 %>
-  </div>
+<div id="macro-form-container" class="container-sm mt-5 p-4 border rounded shadow">
+  <h2 id="macros-title">Current Macros</h2>
   <br>
-  <div>
-    <%= f.submit "Update Macro" %>
-  </div>
 
-  <%= link_to "Delete Macro", macro_path(@macro), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this macro?" }, class: "delete-button" %>
-  <br>
-  <%= link_to "Back", macros_path(logged_date: @macro.logged_date.to_date) %>
-<% end %>
+  <% if @macro.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h3 class="error-heading"><%= pluralize(@macro.errors.count, "error") %> prevented this macro from being updated:</h3>
+      <ul class="error-list">
+        <% @macro.errors.full_messages.each do |msg| %>
+          <li class="error-message"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: @macro, url: macro_path(@macro), method: :patch, local: true, html: { id: "macro-form" } do |f| %>
+    <div class="form-group mb-3">
+      <%= f.label :calories, class: "form-label" %>
+      <%= f.number_field :calories, step: 0.01, class: "form-control" %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :protein, class: "form-label" %>
+      <%= f.number_field :protein, step: 0.01, class: "form-control" %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :carbohydrates, class: "form-label" %>
+      <%= f.number_field :carbohydrates, step: 0.01, class: "form-control" %>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :fats, class: "form-label" %>
+      <%= f.number_field :fats, step: 0.01, class: "form-control" %>
+    </div>
+
+    <div class="form-actions mt-4">
+      <%= f.submit "Update Macro", class: "btn btn-primary w-100" %>
+    </div>
+
+    <div class="extra-actions mt-3 text-center">
+      <%= link_to "Delete Macro", macro_path(@macro), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this macro?" }, class: "btn btn-outline-danger me-2" %>
+      <%= link_to "Back", macros_path(logged_date: @macro.logged_date.to_date), class: "btn btn-outline-secondary" %>
+    </div>
+  <% end %>
+</div>

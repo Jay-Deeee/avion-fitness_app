@@ -47,7 +47,7 @@ class CalculatorsController < ApplicationController
   end
 
   render :show
-end
+  end
 
 def index
   @calculations = current_user.calculators.order(created_at: :desc)

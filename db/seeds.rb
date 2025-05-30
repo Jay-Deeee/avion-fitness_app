@@ -84,3 +84,47 @@ end
 ].each do |text|
   Quote.find_or_create_by!(quote: text)
 end
+
+
+
+[
+  # Fruit
+  { food: "Apple", serving_size: "1 (4 oz.)", protein: "0.27g" ,carbs: "14.36g",fat: "0.18g",food_type:"Fruit" },
+  { food: "Banana", serving_size: "	1 (6 oz.)", protein: "1.85g" ,carbs: "38.85g	",fat: "0.56g",food_type:"Fruit" },
+  { food: "Grapes", serving_size: "	1 cup", protein: "	1.15g" ,carbs: "28.96g",fat: "0.26g",food_type:"Fruit" },
+  { food: "Orange", serving_size: "1 (4 oz.)", protein: "0.79g" ,carbs: "11.79g",fat: "0.23g",food_type:"Fruit" },
+  { food: "Pear", serving_size: "	1 (5 oz.)", protein: "0.54g" ,carbs: "21.91g",fat: "0.17g",food_type:"Fruit" },
+  { food: "Peach", serving_size: "1 (6 oz.)", protein: "1.2g" ,carbs: "	12.59g",fat: "0.33g",food_type:"Fruit" },
+  { food: "Pineapple", serving_size: "	1 cup", protein: "0.84g" ,carbs: "19.58g",fat: "0.19g",food_type:"Fruit" },
+  { food: "Strawberry", serving_size: "1 cup", protein: "	1.11g" ,carbs: "12.75g",fat: "0.5g",food_type:"Fruit" },
+  { food: "Watermelon", serving_size: "1 cup", protein: "	0.93g" ,carbs: "	11.48g",fat: "0.23g",food_type:"Fruit" },
+
+    # Vegetables
+  { food: "Asparagus", serving_size: "1 cup", protein: "	2.95g" ,carbs: "5.2g",fat: "	0.16g",food_type:"Vegetables" },
+  { food: "Broccoli", serving_size: "	1 cup", protein: "	2.57g" ,carbs: "6.04g	",fat: "0.34g",food_type:"Vegetables" },
+  { food: "Carrots", serving_size: "	1 cup", protein: "1.19g" ,carbs: "12.26g	",fat: "0.31g",food_type:"Vegetables" },
+  { food: "Cucumber", serving_size: "4 oz.", protein: "0.67g" ,carbs: "2.45g",fat: "	0.18g",food_type:"Vegetables" },
+  { food: "Eggplant", serving_size: "1 cup", protein: "0.98g" ,carbs: "5.88g",fat: "	0.18g",food_type:"Vegetables" },
+  { food: "Lettuce", serving_size: "1 cup", protein: "0.5g" ,carbs: "1.63g",fat: "0.08g",food_type:"Vegetables" },
+  { food: "Tomato", serving_size: "1 cup", protein: "1.58g" ,carbs: "17.06g",fat: "0.36g",food_type:"Vegetables" },
+
+    # Proteins
+  { food: "Beef, regular, cooked", serving_size: "2 oz.", protein: "	0g" ,carbs: "5.2g",fat: "	010.4g",food_type:"Proteins" },
+  { food: "Chicken, cooked", serving_size: "2 oz.", protein: "0g	" ,carbs: "6.04g	",fat: "1.84g",food_type:"Proteins" },
+  { food: "Tofu", serving_size: "4 oz.", protein: "7.82g" ,carbs: "2.72g	",fat: "3.06g",food_type:"Proteins" },
+  { food: "Egg", serving_size: "	2 oz.", protein: "6.29g" ,carbs: "0.38g",fat: "	4.97g",food_type:"Proteins" },
+  { food: "Fish, Catfish, cooked", serving_size: "9.96g", protein: "4.84g" ,carbs: "8.24g",fat: "	0.18g",food_type:"Proteins" },
+  { food: "Pork, cooked", serving_size: "	2 oz.", protein: "	15.82g" ,carbs: "0g",fat: "8.26g",food_type:"Proteins" },
+  { food: "Shrimp, cooked", serving_size: "	2 oz.", protein: "15.45g" ,carbs: "0.69g",fat: "1.32g",food_type:"Proteins" }
+ 
+  
+ 
+].each do |macrofood|
+  Macronutrient.find_or_create_by!(food: macrofood[:food]) do |m|
+    m.serving_size = macrofood[:serving_size]
+    m.protein = macrofood[:protein]
+    m.carbs = macrofood[:carbs]
+    m.fat = macrofood[:fat]
+    m.food_type = macrofood[:food_type]
+  end
+end

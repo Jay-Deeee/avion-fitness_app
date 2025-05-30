@@ -2,10 +2,10 @@
   <section class="col-lg-3 mt-5 border-end border-secondary d-flex align-items-center flex-column p-2">
     <%= render "dbleft", q: @quote%>
   </section>
-  <section class="col-lg-6  mt-5 d-flex align-items-center flex-column p-2">
+  <section class="col-lg-5  mt-5 d-flex align-items-center flex-column p-2">
     <%= render "dbmid" %>
   </section>
-  <section class="col-lg-3 mt-5 border-start border-secondary p-2 d-flex align-items-center flex-column">
-    <h3>Summary</h3>
+  <section class="col-lg-4 mt-5 border-start border-secondary p-2 d-flex align-items-center flex-column">
+    <%= render "dbright" , m: @macronutrients %>
   </section>
 </div>

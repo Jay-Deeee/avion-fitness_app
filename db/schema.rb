@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_28_154057) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_30_153903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_28_154057) do
     t.integer "position"
     t.index ["exercise_type_id"], name: "index_exercises_on_exercise_type_id"
     t.index ["workout_id"], name: "index_exercises_on_workout_id"
+  end
+
+  create_table "macronutrients", force: :cascade do |t|
+    t.string "food"
+    t.string "serving_size"
+    t.string "protein"
+    t.string "carbs"
+    t.string "fat"
+    t.string "food_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "macros", force: :cascade do |t|

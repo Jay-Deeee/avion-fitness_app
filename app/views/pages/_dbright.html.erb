@@ -1,0 +1,23 @@
+<h3>Macronutrients in Common Foods</h3>
+<div class="macronut_table p-2">
+  <table class="table table-responsive table-striped">
+    <thead>
+      <th>Food</th>
+      <th>Serving Size</th>
+      <th>Protein</th>
+      <th>Carbs</th>
+      <th>Fat</th>
+    </thead>
+    <tbody>
+      <% m.map do |m| %>
+      <tr>
+        <td><%= m.food %></td>
+        <td><%= m.serving_size %></td>
+        <td><%= m.protein %></td>
+        <td><%= m.carbs %></td>
+        <td><%= m.fat %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

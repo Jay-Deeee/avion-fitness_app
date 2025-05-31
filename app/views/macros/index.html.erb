@@ -1,18 +1,20 @@
-<section id="macro-container" class="macro-container">
+<section id="macro-index" class="macro-container">
   <div id="macro-calendar">
-    <div>
-      <label for="macro-date">Select a date:</label> 
-      <input
-        type="text"
-        id="macro-date"
-        placeholder="Pick a date"
-        data-selected-date="<%= params[:logged_date] %>"
-        data-url-param="logged_date"
-        style="display: none;"
-      />
+    <div class="calendar-container">
+      <label for="macro-date">Select a date:</label>
+      <div>
+        <input
+          type="text"
+          id="macro-date"
+          placeholder="Pick a date"
+          data-selected-date="<%= params[:logged_date] %>"
+          data-url-param="logged_date"
+          style="display: none;"
+        />
+      </div>
     </div>
   </div>
- 
+
   <div id="macro-section" style="margin-top: 2rem;">
    <% if @logged_date %>
       <h3><%= @logged_date.strftime("%B %d, %Y") %></h3>

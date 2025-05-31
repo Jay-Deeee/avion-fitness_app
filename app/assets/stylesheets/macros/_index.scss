@@ -19,3 +19,82 @@
     min-width: 50vh;
   }
 }
+
+.macro-container {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  justify-content: space-around;
+  height: calc(100% - 58px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  #macro-calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40%;
+    height: 100%;
+
+    .calendar-container {
+      height: min-content;
+    }
+  }
+
+  .macro-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+
+    .macro-date-title {
+      text-align: center;
+    }
+
+    .macro-title {
+      text-decoration: none;
+      color: #000000;
+    }
+
+    .macro-title:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 70vh;
+      gap: 20px;
+    }
+
+    div {
+      .food-entry-container {
+        display: flex;
+        width: 49%;
+
+        .food-name-container {
+          display: flex;
+          width: 280px;
+          border-bottom: 1px solid #00000050;
+        }
+
+        .macro-entry-container {
+          list-style-type: none;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 25px;
+          margin: 0;
+          padding: 0;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+.food-name-container {
+  display: flex;
+}

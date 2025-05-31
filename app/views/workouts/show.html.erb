@@ -128,8 +128,8 @@
       </div>
     </div>
 
-    <%= link_to workouts_path(performed_on: @workout.performed_on), class: "color-black" do %>
-      <span>
+    <%= link_to workouts_path(performed_on: @workout.performed_on), style: "width: 20%;" do  %>
+      <span class="btn btn-outline-secondary">
         <i class="fa-solid fa-arrow-left"></i> Back to Workouts
       </span>
     <% end %>

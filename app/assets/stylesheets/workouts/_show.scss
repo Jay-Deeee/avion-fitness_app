@@ -18,7 +18,7 @@
         background: #e8eae6;
         width: 282px;
         border: 1px solid #00000020;
-        border-radius: 15px 15px 10px 10px;
+        border-radius: 20px 20px 10px 10px;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 
         .exercise-name-container {
@@ -68,6 +68,10 @@
       }
     }
   }
+}
+
+h5 {
+  font-size: 1.13em;
 }
 
 .e-set-delete {

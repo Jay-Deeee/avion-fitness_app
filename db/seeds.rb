@@ -115,7 +115,20 @@ end
   { food: "Egg", serving_size: "	2 oz.", protein: "6.29g" ,carbs: "0.38g",fat: "	4.97g",food_type:"Proteins" },
   { food: "Fish, Catfish, cooked", serving_size: "9.96g", protein: "4.84g" ,carbs: "8.24g",fat: "	0.18g",food_type:"Proteins" },
   { food: "Pork, cooked", serving_size: "	2 oz.", protein: "	15.82g" ,carbs: "0g",fat: "8.26g",food_type:"Proteins" },
-  { food: "Shrimp, cooked", serving_size: "	2 oz.", protein: "15.45g" ,carbs: "0.69g",fat: "1.32g",food_type:"Proteins" }
+  { food: "Shrimp, cooked", serving_size: "	2 oz.", protein: "15.45g" ,carbs: "0.69g",fat: "1.32g",food_type:"Proteins" },
+
+  # Common Meals/Snacks
+  { food: "Bread, white", serving_size: "1 slice (1 oz.)", protein: "	1.91g" ,carbs: "12.65g",fat: "0.82g",food_type:"Common Meals/Snacks" },
+  { food: "Butter", serving_size: "1 tablespoon", protein: "0.12g" ,carbs: "0.01g",fat: "	11.52g",food_type:"Common Meals/Snacks" },
+  { food: "Caesar salad", serving_size: "3 cups", protein: "16.3g" ,carbs: "21.12g",fat: "45.91g",food_type:"Common Meals/Snacks" },
+  { food: "Cheeseburger", serving_size: "1 sandwich", protein: "14.77g" ,carbs: "	31.75g",fat: "	15.15g",food_type:"Common Meals/Snacks" },
+  { food: "Hamburger", serving_size: "1 sandwich", protein: "14.61g" ,carbs: "26.81g",fat: "	10.97g",food_type:"Common Meals/Snacks" },
+  { food: "Dark Chocolate", serving_size: "	1 oz.", protein: "1.57g" ,carbs: "16.84g",fat: "9.19g",food_type:"Common Meals/Snacks" },
+  { food: "Corn", serving_size: "1 cup", protein: "4.3g" ,carbs: "30.49g	",fat: "1.64g",food_type:"Common Meals/Snacks" },
+  { food: "Pizza", serving_size: "1 slice (14')", protein: "13.32g" ,carbs: "33.98g",fat: "	12.13g",food_type:"Common Meals/Snacks" },
+  { food: "Potato", serving_size: "6 oz.", protein: "4.47g" ,carbs: "36.47g",fat: "0.22g",food_type:"Common Meals/Snacks" },
+  { food: "Rice", serving_size: "1 cup cooked", protein: "4.2g" ,carbs: "	44.08g",fat: "0.44g",food_type:"Common Meals/Snacks" },
+  { food: "Sandwich", serving_size: "1 (6' Subway Turkey Sandwich)", protein: "18g" ,carbs: "46g",fat: "3.5g",food_type:"Common Meals/Snacks" }
  
   
  

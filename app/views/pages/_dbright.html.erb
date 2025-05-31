@@ -9,7 +9,11 @@
       <th>Fat</th>
     </thead>
     <tbody>
-      <% m.map do |m| %>
+      <% grouped_data.each do |food_type, items| %>
+      <tr>
+        <td colspan="5"><strong><%= food_type %></strong></td>
+      </tr>
+      <% items.each do |m| %>
       <tr>
         <td><%= m.food %></td>
         <td><%= m.serving_size %></td>
@@ -17,7 +21,7 @@
         <td><%= m.carbs %></td>
         <td><%= m.fat %></td>
       </tr>
-      <% end %>
+      <% end %> <% end %>
     </tbody>
   </table>
 </div>

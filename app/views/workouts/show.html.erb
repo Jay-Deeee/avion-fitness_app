@@ -6,7 +6,7 @@
   <div class="workout-section">
     <h4 class="workout-date-title"><%= @workout.performed_on.strftime("%B %d, %Y") %></h4>
 
-    <div>
+    <div class="overall-container">
       <div class="exercise-title">
         <h4><%= @workout.name.upcase %></h4>
 
@@ -34,7 +34,7 @@
 
       <div class="content-container">
         <% @exercises.each do |exercise| %>
-          <div>
+          <div class="show-exercise-container">
             <div class="exercise-name-container">
               <h5><%= exercise.exercise_type.name %></h5>
 

@@ -20,7 +20,7 @@
       <h4 class="workout-date-title"><%= @selected_date.strftime("%B %d, %Y") %></h4>
 
       <% if @workout %>
-        <div>
+        <div class="overall-container">
           <h4><%= link_to "#{@workout.name.upcase}", workout_path(@workout), class: "workout-title" %></h4>
           
           <div class="content-container">

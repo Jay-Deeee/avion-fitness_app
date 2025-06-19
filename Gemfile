@@ -60,7 +60,7 @@ end
 gem "devise", "~> 4.9", ">= 4.9.4"
 
 group :development, :test do
-  gem "rspec-rails", "~> 8.0.0"
+  gem "rspec-rails", "~> 8.0.1"
 end
 
 group :development, :test do
